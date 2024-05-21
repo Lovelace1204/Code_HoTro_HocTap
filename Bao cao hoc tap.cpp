@@ -66,32 +66,32 @@ void ShowEntries(const vector<DailyReport>& reports);
 void AddEntry(vector<DailyReport>& reports) {
     DailyReport newEntry;
 
-    cout << "date           : ";
+    cout << "date              : ";
     cin >> newEntry.DATE;
 
-    cout << "App dev        : ";
+    cout << "App dev           : ";
     cin.ignore();
     getline(cin, newEntry.APP_DEV);
 
-    cout << "Code           : ";
+    cout << "Code              : ";
     getline(cin, newEntry.CODE);
 
-    cout << "Giai tich 2    : ";
+    cout << "Giai tich 2       : ";
     getline(cin, newEntry.GIAI_TICH2);
 
-    cout << "Kinh te chinh  : ";
+    cout << "Kinh te chinh tri : ";
     getline(cin, newEntry.KINH_TE_CHINH_TRI);
 
-    cout << "Ky thuat so    : ";
+    cout << "Ky thuat so       : ";
     getline(cin, newEntry.KY_THUAT_SO);
 
-    cout << "Other code     : ";
+    cout << "Other code        : ";
     getline(cin, newEntry.OTHER_CODE);
 
-    cout << "Self dev       : ";
+    cout << "Self dev          : ";
     getline(cin, newEntry.SELF_DEV);
 
-    cout << "Note           : ";
+    cout << "Note              : ";
     getline(cin, newEntry.NOTE);
 
     reports.push_back(newEntry);
@@ -344,7 +344,10 @@ void ShowEntries (const vector<DailyReport>& reports) {
     if (input == "all") {
         
 		for (const auto& entry : reports) {
+			cout << endl;
+			SetConsoleTextAttribute(hConsole, 142);
             cout << "date           : " << entry.DATE << endl;
+            SetConsoleTextAttribute(hConsole, 7);
             cout << "App dev        : " << entry.APP_DEV << endl;
             cout << "Code           : " << entry.CODE << endl;
             cout << "Giai tich 2    : " << entry.GIAI_TICH2 << endl;
