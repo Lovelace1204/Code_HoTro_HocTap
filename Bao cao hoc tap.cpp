@@ -56,6 +56,7 @@ struct DailyReport {
 
 void AddEntry(vector<DailyReport>& reports);
 void DeleteEntry(vector<DailyReport>& reports, const string& input);
+void DisplayHelp ();
 void EditEntry(vector<DailyReport>& reports);
 void LoadData(vector<DailyReport>& reports, const string& filename);
 void SaveData(const vector<DailyReport>& reports, const string& filename);
@@ -215,6 +216,23 @@ void DeleteEntry (vector<DailyReport>& reports, const string& input) {
     }
 }
 
+void DisplayHelp () {
+	cout << "Avaible command: " << endl;
+	cout << "HELP. . . . . . . . . . . . . . . . . . . . . . : Hien thi hop thoai nay" << endl;
+	cout << "ADD . . . . . . . . . . . . . . . . . . . . . . : Them thong tin vao BaoCao_HocTap"<< endl;
+	cout << "DELETE. . . . . . . . . . . . . . . . . . . . . : Xoa bao cao" << endl;
+	cout << "EDIT. . . . . . . . . . . . . . . . . . . . . . : Chinh sua bao cao" << endl;
+	cout << "SHOW. . . . . . . . . . . . . . . . . . . . . . : Hien thi toan bo bao cao" << endl;
+	cout << "<SpecialCommand> -> THANGNAOLAMRACAINAY?. . . . : Hien thi in4 tac gia cua project nay \n<SpoilerAlert: tac gia la mot nguoi rat dep trai :'>" << endl;
+	return;
+}
+
+
+void DisplayInvalidInputError () {
+	cerr << "Cau lenh khong hop le." << endl;
+	cerr << "Nhap \"Help\" de hien thi <Availble_Command!>" << endl;
+	cerr << "Input se duoc tieu chuan hoa, nhap 'help' hoac 'HELP' deu cho ra 1 ket qua, 'HeLp' hay 'HLeP' gi cung duoc luon =))" << endl;
+}
 
 void EditEntry (vector<DailyReport>& reports) {
     string editDate;
@@ -386,6 +404,14 @@ void ShowEntries (const vector<DailyReport>& reports) {
     }
 }
 
+void StandardizeInput (string& input) {
+	int index = 0;
+	while ( input[index] != '\0' ) {
+		if ( input[index] >= 'A' && input[index] <= 'Z') input[index]+=32;
+		index++;
+	}
+}
+
 void ThangNaoLamRaCaiNay () {
 	       	
    	SetConsoleTextAttribute(hConsole, 15);
@@ -414,6 +440,7 @@ void ThangNaoLamRaCaiNay () {
     return;
 }
 
+
 int main() {
     
 	
@@ -429,6 +456,8 @@ int main() {
 		SetConsoleTextAttribute(hConsole, 7);
         string command;
         cin >> command;
+        StandardizeInput(command);
+        
 
         if (command == "add") {
             AddEntry(reports);
@@ -449,9 +478,13 @@ int main() {
        	    cout << "Du lieu duoc lay tu " << filename << endl;
             SetConsoleTextAttribute(hConsole, 7);
 			
+		} else if ( command == "help" ) {
+			SetConsoleTextAttribute(hConsole, 11);
+			DisplayHelp();
+			SetConsoleTextAttribute(hConsole, 7);
 		} else {
             SetConsoleTextAttribute(hConsole, 12);
-			cerr << "Cau lenh khong hop le. Hay nhap 'add' - 'show' - 'edit' - 'delete' - 'clear' - 'thangnaolamracainay?'\n";
+			DisplayInvalidInputError();
 			SetConsoleTextAttribute(hConsole, 7);
         }
 
