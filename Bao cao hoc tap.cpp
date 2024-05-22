@@ -217,7 +217,7 @@ void DeleteEntry (vector<DailyReport>& reports, const string& input) {
 }
 
 void DisplayHelp () {
-	cout << "Avaible command: " << endl;
+	cout << "Available command: " << endl;
 	cout << "HELP. . . . . . . . . . . . . . . . . . . . . . : Hien thi hop thoai nay" << endl;
 	cout << "ADD . . . . . . . . . . . . . . . . . . . . . . : Them thong tin vao BaoCao_HocTap"<< endl;
 	cout << "DELETE. . . . . . . . . . . . . . . . . . . . . : Xoa bao cao" << endl;
