@@ -5,3 +5,7 @@ Version 1.0.0 first build
               // Update 'help' command
               // Re-arrange code-architect 
               // Standardize input feature added
++ 23/5/2024 : update Version 1.2.0
+		// Include check input-date feature
+		// Re-arrange code-architect ( better to read:)
+		// Fixed some bugs

@@ -7,6 +7,8 @@
 #include <windows.h>
 
 
+#define CurrentYear 2024
+#define version "1.2.0"
 #define endl "\n"
 #define motivation cout << "\n\n \t-It's during our darkest moments that we must focus to see the light- \n\t\t\t\t\t\t\t\t-Aristotle Onassis-" << endl;
 #define StopCode 10101
@@ -54,11 +56,20 @@ struct DailyReport {
     string NOTE;
 };
 
+int ValidDateInput (string date);
+void PrintInvalidDateInputError (string CheckDate);
+
+
+// Feature funtion
 void AddEntry(vector<DailyReport>& reports);
+
+void ClearScreen (string filename);
+
 void DeleteEntry(vector<DailyReport>& reports, const string& input);
 void DisplayHelp ();
+
 void EditEntry(vector<DailyReport>& reports);
-void LoadData(vector<DailyReport>& reports, const string& filename);
+
 void SaveData(const vector<DailyReport>& reports, const string& filename);
 void ShowEntries(const vector<DailyReport>& reports);
 
@@ -68,7 +79,15 @@ void AddEntry(vector<DailyReport>& reports) {
     DailyReport newEntry;
 
     cout << "date              : ";
-    cin >> newEntry.DATE;
+    
+	string CheckDate;
+    cin >> CheckDate;
+    if ( !ValidDateInput(CheckDate)) {
+    	PrintInvalidDateInputError(CheckDate);
+    	return;
+	} 
+    	
+    newEntry.DATE = CheckDate;
 
     cout << "App dev           : ";
     cin.ignore();
@@ -131,9 +150,28 @@ void CheckRuntimeError (int& running) {
 		}
 }
 
+void ClearScreen (string filename) {
+	system("cls");
+	SetConsoleTextAttribute(hConsole, 10);
+    cout << "Du lieu duoc lay tu " << filename << endl;
+    SetConsoleTextAttribute(hConsole, 7);
+    return;
+}
+
 // Function to delete data
-void DeleteEntry (vector<DailyReport>& reports, const string& input) {
-    if (input == "all") {
+void DeleteEntry (vector<DailyReport>& reports) {
+    string input;
+    cout << "Nhap 'all' de xoa tat ca hoac nhap ngay de xoa du lieu cua ngay do: ";
+    
+	string CheckDate;
+    cin >> CheckDate;
+    if ( CheckDate != "all" && !ValidDateInput(CheckDate)) {
+    	PrintInvalidDateInputError(CheckDate);
+    	return;
+	}
+	
+	input = CheckDate;
+	if (input == "all") {
         char choice;
         SetConsoleTextAttribute(hConsole, 12);
         cout << "Nguoi ae co chac muon xoa tat ca lam lai tu dau? (y/n): ";
@@ -217,6 +255,7 @@ void DeleteEntry (vector<DailyReport>& reports, const string& input) {
 }
 
 void DisplayHelp () {
+	SetConsoleTextAttribute(hConsole, 14);
 	cout << "Available command: " << endl;
 	cout << "HELP. . . . . . . . . . . . . . . . . . . . . . : Hien thi hop thoai nay" << endl;
 	cout << "ADD . . . . . . . . . . . . . . . . . . . . . . : Them thong tin vao BaoCao_HocTap"<< endl;
@@ -224,20 +263,32 @@ void DisplayHelp () {
 	cout << "EDIT. . . . . . . . . . . . . . . . . . . . . . : Chinh sua bao cao" << endl;
 	cout << "SHOW. . . . . . . . . . . . . . . . . . . . . . : Hien thi toan bo bao cao" << endl;
 	cout << "<SpecialCommand> -> THANGNAOLAMRACAINAY?. . . . : Hien thi in4 tac gia cua project nay \n<SpoilerAlert: tac gia la mot nguoi rat dep trai :'>" << endl;
+	SetConsoleTextAttribute(hConsole, 7);
 	return;
 }
 
 
-void DisplayInvalidInputError () {
+void DisplayInvalidCommandError () {
+	SetConsoleTextAttribute(hConsole, 12);
 	cerr << "Cau lenh khong hop le." << endl;
 	cerr << "Nhap \"Help\" de hien thi <Availble_Command!>" << endl;
 	cerr << "Input se duoc tieu chuan hoa, nhap 'help' hoac 'HELP' deu cho ra 1 ket qua, 'HeLp' hay 'HLeP' gi cung duoc luon =))" << endl;
+	SetConsoleTextAttribute(hConsole, 7);
+	return;
 }
 
 void EditEntry (vector<DailyReport>& reports) {
     string editDate;
     cout << "Nhap ngay ban muon thay doi du lieu: ";
-    cin >> editDate;
+    
+    string CheckDate;
+    cin >> CheckDate;
+    if ( !ValidDateInput(CheckDate)) {
+    	PrintInvalidDateInputError(CheckDate);
+    	return;
+	}
+	
+	editDate = CheckDate;
 
     bool found = false;
     for (auto& entry : reports) {
@@ -293,6 +344,10 @@ void EditEntry (vector<DailyReport>& reports) {
     }
 }
 
+bool IsLeapYear(int year) {
+   if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) return true;
+   else return false;
+}
 
 // Function to load data from a file
 void LoadData (vector<DailyReport>& reports, const string& filename) {
@@ -348,6 +403,14 @@ void SaveData (const vector<DailyReport>& reports, const string& filename) {
     }
 }
 
+void PrintInvalidDateInputError ( string CheckDate ) {
+	SetConsoleTextAttribute(hConsole, 12);
+	cout << "The '" << CheckDate << "' input is invalid, please type in date as DD/MM/YYYY of DD-MM-YYYY" << endl;
+	cout << "Invalid DateInput <ErrorCode-472>" << endl;
+	SetConsoleTextAttribute(hConsole, 7);
+	return;
+}
+
 // Function to show entries based on user input
 void ShowEntries (const vector<DailyReport>& reports) {
     if (reports.empty()) {
@@ -357,15 +420,23 @@ void ShowEntries (const vector<DailyReport>& reports) {
 
     cout << "Nhap 'all' de show tat ca hoac nhap ngay de show du lieu cua ngay do: ";
     string input;
-    cin >> input;
+    
+    string CheckDate;
+    cin >> CheckDate;
+    if ( CheckDate != "all" && !ValidDateInput(CheckDate)) {
+    	PrintInvalidDateInputError(CheckDate);
+    	return;
+	}
+	
+	input = CheckDate;
 
     if (input == "all") {
         
 		for (const auto& entry : reports) {
 			cout << endl;
 			SetConsoleTextAttribute(hConsole, 142);
-            cout << "date           : " << entry.DATE << endl;
-            SetConsoleTextAttribute(hConsole, 7);
+            cout << "date           : " << entry.DATE;
+            SetConsoleTextAttribute(hConsole, 7); cout << endl;
             cout << "App dev        : " << entry.APP_DEV << endl;
             cout << "Code           : " << entry.CODE << endl;
             cout << "Giai tich 2    : " << entry.GIAI_TICH2 << endl;
@@ -414,18 +485,19 @@ void StandardizeInput (string& input) {
 
 void ThangNaoLamRaCaiNay () {
 	       	
-   	SetConsoleTextAttribute(hConsole, 15);
+   	SetConsoleTextAttribute(hConsole, 14);
 	cout << "\n _Please stand by_ " << endl;
     cout << "===================" << endl;
     cout << " _Nguyen Hai Hung_ " << endl;
     cout << "Powered by GPT_3.5, GPT_4thGen and GPT 4o" << endl;
     cout << "Thanks for using the app :3" << endl;
-    string s = "I Love U ";
+    string s = "+";
+    
    	// origin 0.06 0.025
 	for ( float y = 1.3 ; y >= -1.1 ; y -= 0.12 ) {       			
 		int index = 0;
        	for ( float x = -1.2; x <= 1.2; x += 0.05 ) {
-		SetConsoleTextAttribute(hConsole, 14);
+		
         if( pow((x*x+y*y-1.0),3) - x*x*y*y*y <= 0.0 )
             cout << s[(index++)%s.size()];
         else
@@ -435,9 +507,73 @@ void ThangNaoLamRaCaiNay () {
        		// author Yubo Liu
        		// repo github
        		// https://github.com/liuyubobobo/heart-curve-cplusplus/tree/master
-       	SetConsoleTextAttribute(hConsole, 7);
+       	
    		}
+   	SetConsoleTextAttribute(hConsole, 7);
     return;
+}
+
+// DD/MM/YYYY
+int ValidDateInput (string date) {
+	        SetConsoleTextAttribute(hConsole, 10);
+			int index = 0;
+			int IntDate[3] = {0};
+			int TempIndex = index;
+			for ( int i = 0; i < 3; i++) {
+				
+				while ( date[TempIndex] != '\0' && date[TempIndex] != '/' && date[TempIndex] != '-') {
+					
+					if ( date[TempIndex] < '0' || date[TempIndex] > '9' ) return 0;
+					
+					IntDate[i] = IntDate[i]*10 + (date[TempIndex]-48);
+					TempIndex++;
+				}
+				
+			if (i == 0 && (IntDate[i] < 0 || IntDate[i] > 31)) {
+				cout << "Day " << IntDate[0] << " exist ? bro u serious?:)" << endl;
+				SetConsoleTextAttribute(hConsole, 7);
+				return 0;
+			}
+			else if (i == 1 && (IntDate[i] < 0 || IntDate[i] > 12)) {
+				cout << "Month " << IntDate[1] << " exist ? bro u serious?:)" << endl;
+				SetConsoleTextAttribute(hConsole, 7);
+				return 0;
+			}
+			else if (i == 2 && IntDate[2] != CurrentYear) {
+   			 	cout << "U living in " << IntDate[2] << "  ? bro u serious =))? <This last updated verion is in " << CurrentYear << ">" << "- Ver : " << version << endl;
+   			 	SetConsoleTextAttribute(hConsole, 7);
+   			 	return 0;
+			} 
+			else if ( IntDate[i] == 0) {
+				return 0;
+			}
+			else TempIndex++;
+			
+			if ( i == 2 && date[TempIndex] != '\0') return 0;
+
+		}
+		
+		// Handle valid value but in special case
+		if ( (IntDate[1] == 4 || IntDate[1] == 6 || IntDate[1] == 9 || IntDate[1] == 11) && IntDate[0] > 30) {
+			cout << "The " << IntDate[1] << " month does'nt have 31 days bro =))" << endl;
+			SetConsoleTextAttribute(hConsole, 7);
+			return 0;
+		} 
+		else if ( !IsLeapYear(IntDate[2]) && IntDate[0] > 28 ) {
+			cout << "The " << IntDate[2] << " is not a leap year so it can only have 28 days bro" << endl;
+			SetConsoleTextAttribute(hConsole, 7);
+			return 0; 
+		} 
+		else if ( IsLeapYear(IntDate[2]) && IntDate[0] > 29 ) {
+			cout << "The " << IntDate[2] << " is a leap year, but it only can have 29 but not " << IntDate[0] << " bro, double-check on that." << endl;
+			SetConsoleTextAttribute(hConsole, 7);
+			return 0;
+		}
+		else {
+			SetConsoleTextAttribute(hConsole, 7);
+			return 1;
+		}
+		
 }
 
 
@@ -458,37 +594,17 @@ int main() {
         cin >> command;
         StandardizeInput(command);
         
-
-        if (command == "add") {
-            AddEntry(reports);
-        } else if (command == "show") {
-            ShowEntries(reports);
-        } else if (command == "edit") {
-            EditEntry(reports);
-        } else if (command == "delete") {
-            string input;
-            cout << "Nhap 'all' de xoa tat ca hoac nhap ngay de xoa du lieu cua ngay do: ";
-            cin >> input;
-            DeleteEntry(reports, input);
-        } else if ( command == "thangnaolamracainay?" ){
- 			ThangNaoLamRaCaiNay();
-		} else if ( command == "clear") {
-			system("cls");
-			SetConsoleTextAttribute(hConsole, 10);
-       	    cout << "Du lieu duoc lay tu " << filename << endl;
-            SetConsoleTextAttribute(hConsole, 7);
-			
-		} else if ( command == "help" ) {
-			SetConsoleTextAttribute(hConsole, 11);
-			DisplayHelp();
-			SetConsoleTextAttribute(hConsole, 7);
-		} else {
-            SetConsoleTextAttribute(hConsole, 12);
-			DisplayInvalidInputError();
-			SetConsoleTextAttribute(hConsole, 7);
-        }
-
-        SaveData(reports, filename);
+		if      (command == "add")                      AddEntry(reports);
+		else if (command == "clear")                    ClearScreen(filename);
+		else if (command == "delete")        			DeleteEntry(reports);
+		else if (command == "edit") 					EditEntry(reports);
+		else if (command == "show") 					ShowEntries(reports);
+		else if (command == "thangnaolamracainay?") 	ThangNaoLamRaCaiNay();
+		else if (command == "help") 					DisplayHelp();
+		else 											DisplayInvalidCommandError();
+		
+		SaveData(reports, filename);
+   		
         
 		running++;
 		CheckRuntimeError(running);
