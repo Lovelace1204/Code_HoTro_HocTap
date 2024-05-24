@@ -9,3 +9,5 @@ Version 1.0.0 first build
 		// Invalid date input ( not perfectly ) handled
 		// Re-arrange code-architect ( better to read:)
 		// Fixed some bugs
++ 24/5/2024 : Minor update 1.2.1
+		// Add 'close' command to close the app
