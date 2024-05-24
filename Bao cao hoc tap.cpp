@@ -8,7 +8,7 @@
 
 
 #define CurrentYear 2024
-#define version "1.2.0"
+#define version "1.2.1"
 #define endl "\n"
 #define motivation cout << "\n\n \t-It's during our darkest moments that we must focus to see the light- \n\t\t\t\t\t\t\t\t-Aristotle Onassis-" << endl;
 #define StopCode 10101
@@ -259,6 +259,7 @@ void DisplayHelp () {
 	cout << "Available command: " << endl;
 	cout << "HELP. . . . . . . . . . . . . . . . . . . . . . : Hien thi hop thoai nay" << endl;
 	cout << "ADD . . . . . . . . . . . . . . . . . . . . . . : Them thong tin vao BaoCao_HocTap"<< endl;
+	cout << "CLOSE . . . . . . . . . . . . . . . . . . . . . : Dong ung dung" << endl;
 	cout << "DELETE. . . . . . . . . . . . . . . . . . . . . : Xoa bao cao" << endl;
 	cout << "EDIT. . . . . . . . . . . . . . . . . . . . . . : Chinh sua bao cao" << endl;
 	cout << "SHOW. . . . . . . . . . . . . . . . . . . . . . : Hien thi toan bo bao cao" << endl;
@@ -595,6 +596,7 @@ int main() {
         StandardizeInput(command);
         
 		if      (command == "add")                      AddEntry(reports);
+		else if (command == "close")                    return 0;
 		else if (command == "clear")                    ClearScreen(filename);
 		else if (command == "delete")        			DeleteEntry(reports);
 		else if (command == "edit") 					EditEntry(reports);
