@@ -8,7 +8,7 @@
 
 
 #define CurrentYear 2024
-#define version "1.2.1"
+#define version "1.2.2"
 #define endl "\n"
 #define motivation cout << "\n\n \t-It's during our darkest moments that we must focus to see the light- \n\t\t\t\t\t\t\t\t-Aristotle Onassis-" << endl;
 #define StopCode 10101
@@ -66,13 +66,14 @@ void AddEntry(vector<DailyReport>& reports);
 void ClearScreen (string filename);
 
 void DeleteEntry(vector<DailyReport>& reports, const string& input);
+void DisplayData (string data);
 void DisplayHelp ();
 
 void EditEntry(vector<DailyReport>& reports);
 
 void SaveData(const vector<DailyReport>& reports, const string& filename);
 void ShowEntries(const vector<DailyReport>& reports);
-
+void StandardizeInput (string& input);
 
 // Function to add a new entry to the data
 void AddEntry(vector<DailyReport>& reports) {
@@ -232,11 +233,13 @@ void DeleteEntry (vector<DailyReport>& reports) {
                 char choice;
                 SetConsoleTextAttribute(hConsole, 12);
                 cout << "Nguoi ae co chac muon xoa du lieu ngay " << input << "? (y/n): ";
-                SetConsoleTextAttribute(hConsole, 7);
+                
                 cin >> choice;
                 if (choice == 'y' || choice == 'Y') {
                     it = reports.erase(it);
+                    SetConsoleTextAttribute(hConsole, 10);
                     cout << "Du lieu ngay " << input << " da duoc xoa thanh cong!" << endl;
+                    SetConsoleTextAttribute(hConsole, 7);
                     motivation;
                 } else {
                     cout << "Yeu cau xoa du lieu da bi huy." << endl;
@@ -249,9 +252,24 @@ void DeleteEntry (vector<DailyReport>& reports) {
         if (!found) {
         	SetConsoleTextAttribute(hConsole, 12);
             cout << "Khong co du lieu ton tai ngay " << input << endl;
-            SetConsoleTextAttribute(hConsole, 7);
         }
     }
+    SetConsoleTextAttribute(hConsole, 7);
+}
+
+void DisplayData (string data) {
+	string TempData = data;
+	StandardizeInput(TempData);
+	if (data.empty() || TempData == "nope" || TempData == "no" ) {
+		SetConsoleTextAttribute(hConsole, 192);
+		cout << "nope";
+		SetConsoleTextAttribute(hConsole, 7);
+		cout << endl;
+	} else {
+		cout << data << endl;
+	}
+	
+	return;
 }
 
 void DisplayHelp () {
@@ -296,14 +314,14 @@ void EditEntry (vector<DailyReport>& reports) {
         if (entry.DATE == editDate) {
             // Show original data
             cout << "Du lieu goc ngay "  << entry.DATE << endl;
-            cout << "App dev        : " << entry.APP_DEV << endl;
-            cout << "Code           : " << entry.CODE << endl;
-            cout << "Giai tich 2    : " << entry.GIAI_TICH2 << endl;
-            cout << "Kinh te chinh  : " << entry.KINH_TE_CHINH_TRI << endl;
-            cout << "Ky thuat so    : " << entry.KY_THUAT_SO << endl;
-            cout << "Other code     : " << entry.OTHER_CODE << endl;
-            cout << "Self dev       : " << entry.SELF_DEV << endl;
-            cout << "Note           : " << entry.NOTE << endl;
+            cout << "App dev            : " << entry.APP_DEV << endl;
+            cout << "Code               : " << entry.CODE << endl;
+            cout << "Giai tich 2        : " << entry.GIAI_TICH2 << endl;
+            cout << "Kinh te chinh tri  : " << entry.KINH_TE_CHINH_TRI << endl;
+            cout << "Ky thuat so        : " << entry.KY_THUAT_SO << endl;
+            cout << "Other code         : " << entry.OTHER_CODE << endl;
+            cout << "Self dev           : " << entry.SELF_DEV << endl;
+            cout << "Note               : " << entry.NOTE << endl;
 
             // Let the user type new data
             cout << "\nNhap du lieu moi:\n";
@@ -333,6 +351,8 @@ void EditEntry (vector<DailyReport>& reports) {
             cout << "Note           : ";
             getline(cin, entry.NOTE);
 
+
+			SetConsoleTextAttribute(hConsole, 10);
             cout << "Du lieu da duoc cap nhat thanh cong!\n";
         //    motivation;
             found = true;
@@ -341,8 +361,10 @@ void EditEntry (vector<DailyReport>& reports) {
     }
 
     if (!found) {
+    	SetConsoleTextAttribute(hConsole, 12);
         cout << "Khong co du lieu ton tai ngay " << editDate << ", nguoi ae xem lai xem nao" << endl;
     }
+    SetConsoleTextAttribute(hConsole, 7);
 }
 
 bool IsLeapYear(int year) {
@@ -415,6 +437,7 @@ void PrintInvalidDateInputError ( string CheckDate ) {
 	return;
 }
 
+
 // Function to show entries based on user input
 void ShowEntries (const vector<DailyReport>& reports) {
     if (reports.empty()) {
@@ -441,14 +464,14 @@ void ShowEntries (const vector<DailyReport>& reports) {
 			SetConsoleTextAttribute(hConsole, 142);
             cout << "date           : " << entry.DATE;
             SetConsoleTextAttribute(hConsole, 7); cout << endl;
-            cout << "App dev        : " << entry.APP_DEV << endl;
-            cout << "Code           : " << entry.CODE << endl;
-            cout << "Giai tich 2    : " << entry.GIAI_TICH2 << endl;
-            cout << "Kinh te chinh  : " << entry.KINH_TE_CHINH_TRI << endl;
-            cout << "Ky thuat so    : " << entry.KY_THUAT_SO << endl;
-            cout << "Other code     : " << entry.OTHER_CODE << endl;
-            cout << "Self dev       : " << entry.SELF_DEV << endl;
-            cout << "Note           : " << entry.NOTE << endl;
+       		cout << "App dev        : "; DisplayData(entry.APP_DEV);
+   			cout << "Code           : "; DisplayData(entry.CODE);
+    		cout << "Giai tich 2    : "; DisplayData(entry.GIAI_TICH2);
+    		cout << "Kinh te chinh  : "; DisplayData(entry.KINH_TE_CHINH_TRI);
+    		cout << "Ky thuat so    : "; DisplayData(entry.KY_THUAT_SO);
+    		cout << "Other code     : "; DisplayData(entry.OTHER_CODE);
+    		cout << "Self dev       : "; DisplayData(entry.SELF_DEV);
+    		cout << "Note           : "; DisplayData(entry.NOTE);
             cout << "-------------------\n";
         //    motivation;
         }
