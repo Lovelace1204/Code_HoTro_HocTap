@@ -411,6 +411,8 @@ void PrintInvalidDateInputError ( string CheckDate ) {
 	return;
 }
 
+
+
 // Function to show entries based on user input
 void ShowEntries (const vector<DailyReport>& reports) {
     if (reports.empty()) {
@@ -469,10 +471,40 @@ void ShowEntries (const vector<DailyReport>& reports) {
         }
         if (!found) {
         	SetConsoleTextAttribute(hConsole, 12);
-            cout << "No data found for the specified date " << input << endl;
+        	string date = input;
+        	int index = 0;
+			while ( date[index] != '\0') {
+				if ( ((date[index] == '/' || date[index] == '-') && date[index+1] == 0) || ( index == 0 && date[index] == 0)) {
+					int i = 0;
+					if ( index == 0 ) index = -1;
+					while ( date[index+2+i] != '\0') {
+						date[index+1+i] = date[index+2+i];
+						i++;
+					}
+					if ( date[index+2+i] == '\0') date[index+1+i] = date[index+2+i];
+				}
+				index++;
+			}
+            cout << "No data found for the specified date " << date << endl;
             SetConsoleTextAttribute(hConsole, 7);
         }
     }
+}
+
+void StandardizeDateInput( string& date) {
+	int index = 0;
+	while ( date[index] != '\0') {
+		if ( (date[index] == '/' || date[index] == '-' || index == 0) && date[index+1] != '\0') {
+			int i = 0;
+			while ( date[index+2+i] != '\0') {
+				date[index+1+i] = date[index+2+i];
+				i++;
+			}
+			if ( date[index+2+i] == '\0') date[index+1+i] = date[index+2+i];
+		}
+		index++;
+	}
+	return;
 }
 
 void StandardizeInput (string& input) {
@@ -481,7 +513,9 @@ void StandardizeInput (string& input) {
 		if ( input[index] >= 'A' && input[index] <= 'Z') input[index]+=32;
 		index++;
 	}
+	return;
 }
+
 
 void ThangNaoLamRaCaiNay () {
 	       	
@@ -514,8 +548,10 @@ void ThangNaoLamRaCaiNay () {
 }
 
 // DD/MM/YYYY
-int ValidDateInput (string date) {
-	        SetConsoleTextAttribute(hConsole, 10);
+int ValidDateInput (string date) {      
+	
+			
+			SetConsoleTextAttribute(hConsole, 10);
 			int index = 0;
 			int IntDate[3] = {0};
 			int TempIndex = index;
@@ -529,29 +565,27 @@ int ValidDateInput (string date) {
 					TempIndex++;
 				}
 				
-			if (i == 0 && (IntDate[i] < 0 || IntDate[i] > 31)) {
+				if ( i == 2 && date[TempIndex] != '\0') return 0;
+				if ( IntDate[i] == 0) return 0;
+				TempIndex++;
+			}
+				
+			if (IntDate[0] < 0 || IntDate[0] > 31) {
 				cout << "Day " << IntDate[0] << " exist ? bro u serious?:)" << endl;
 				SetConsoleTextAttribute(hConsole, 7);
 				return 0;
 			}
-			else if (i == 1 && (IntDate[i] < 0 || IntDate[i] > 12)) {
+			if (IntDate[1] < 0 || IntDate[1] > 12) {
 				cout << "Month " << IntDate[1] << " exist ? bro u serious?:)" << endl;
 				SetConsoleTextAttribute(hConsole, 7);
 				return 0;
 			}
-			else if (i == 2 && IntDate[2] != CurrentYear) {
+			if (IntDate[2] != CurrentYear) {
    			 	cout << "U living in " << IntDate[2] << "  ? bro u serious =))? <This last updated verion is in " << CurrentYear << ">" << "- Ver : " << version << endl;
    			 	SetConsoleTextAttribute(hConsole, 7);
    			 	return 0;
 			} 
-			else if ( IntDate[i] == 0) {
-				return 0;
-			}
-			else TempIndex++;
-			
-			if ( i == 2 && date[TempIndex] != '\0') return 0;
 
-		}
 		
 		// Handle valid value but in special case
 		if ( (IntDate[1] == 4 || IntDate[1] == 6 || IntDate[1] == 9 || IntDate[1] == 11) && IntDate[0] > 30) {
@@ -559,18 +593,19 @@ int ValidDateInput (string date) {
 			SetConsoleTextAttribute(hConsole, 7);
 			return 0;
 		} 
-		else if ( !IsLeapYear(IntDate[2]) && IntDate[0] > 28 ) {
-			cout << "The " << IntDate[2] << " is not a leap year so it can only have 28 days bro" << endl;
+		if ( !IsLeapYear(IntDate[2]) && IntDate[0] > 28 && IntDate[1] == 2 ) {
+			cout << "The " << IntDate[2] << " is not a leap year so the 2nd month can only have 28 days bro" << endl;
 			SetConsoleTextAttribute(hConsole, 7);
 			return 0; 
 		} 
-		else if ( IsLeapYear(IntDate[2]) && IntDate[0] > 29 ) {
-			cout << "The " << IntDate[2] << " is a leap year, but it only can have 29 but not " << IntDate[0] << " bro, double-check on that." << endl;
+		if ( IsLeapYear(IntDate[2]) && IntDate[0] > 29 && IntDate[1] == 2 ) {
+			cout << "The " << IntDate[2] << " is a leap year, but the second month can only have 29 but not " << IntDate[0] << " bro, double-check on that." << endl;
 			SetConsoleTextAttribute(hConsole, 7);
 			return 0;
 		}
 		else {
 			SetConsoleTextAttribute(hConsole, 7);
+			StandardizeDateInput(date);
 			return 1;
 		}
 		

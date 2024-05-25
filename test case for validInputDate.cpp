@@ -3,6 +3,8 @@
 #include <vector> // Include vector header
 #include <windows.h>
 
+#define version "1.2.0"
+#define CurrentYear 2024
 using namespace std;
 
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -18,51 +20,65 @@ bool IsLeapYear(int year) {
     return true;
 }
 
-int ValidDateInput(std::string date) {
-    int index = 0;
-    int IntDate[3] = {0};
-    int TempIndex = index;
-    for (int i = 0; i < 3; i++) {
-        while (date[TempIndex] != '\0' && date[TempIndex] != '/' && date[TempIndex] != '-') {
-            if (date[TempIndex] < '0' || date[TempIndex] > '9') {
-                PrintInvalidDateInputError(date);
-                return 0;
-            }
-            IntDate[i] = IntDate[i] * 10 + (date[TempIndex] - '0');
-            TempIndex++;
-        }
-        TempIndex++;  // Skip the '/' or '-'
-    }
+// DD/MM/YYYY
+int ValidDateInput (string date) {
+	        SetConsoleTextAttribute(hConsole, 10);
+			int index = 0;
+			int IntDate[3] = {0};
+			int TempIndex = index;
+			for ( int i = 0; i < 3; i++) {
+				
+				while ( date[TempIndex] != '\0' && date[TempIndex] != '/' && date[TempIndex] != '-') {
+					
+					if ( date[TempIndex] < '0' || date[TempIndex] > '9' ) return 0;
+					
+					IntDate[i] = IntDate[i]*10 + (date[TempIndex]-48);
+					TempIndex++;
+				}
+				
+				if ( i == 2 && date[TempIndex] != '\0') return 0;
+				if ( IntDate[i] == 0) return 0;
+				TempIndex++;
+			}
+				
+			if (IntDate[0] < 0 || IntDate[0] > 31) {
+				cout << "Day " << IntDate[0] << " exist ? bro u serious?:)" << endl;
+				SetConsoleTextAttribute(hConsole, 7);
+				return 0;
+			}
+			if (IntDate[1] < 0 || IntDate[1] > 12) {
+				cout << "Month " << IntDate[1] << " exist ? bro u serious?:)" << endl;
+				SetConsoleTextAttribute(hConsole, 7);
+				return 0;
+			}
+//			if (IntDate[2] != CurrentYear) {
+//   			 	cout << "U living in " << IntDate[2] << "  ? bro u serious =))? <This last updated verion is in " << CurrentYear << ">" << "- Ver : " << version << endl;
+//   			 	SetConsoleTextAttribute(hConsole, 7);
+//   			 	return 0;
+//			} 
 
-    if (IntDate[0] < 1 || IntDate[0] > 31) {
-        std::cout << "Day " << IntDate[0] << " exists? Bro, you serious?:)" << std::endl;
-        return 0;
-    }
-    if (IntDate[1] < 1 || IntDate[1] > 12) {
-        std::cout << "Month " << IntDate[1] << " exists? Bro, you serious?:)" << std::endl;
-        return 0;
-    }
-    if (IntDate[2] < 2023 || IntDate[2] > 2024) {
-        std::cout << "U living in " << IntDate[2] << "? Bro, you serious =))? <This last updated version is in 2024> - Ver: 1.0" << std::endl;
-        return 0;
-    }
-
-    // Handle valid value but in special cases
-    if ((IntDate[1] == 4 || IntDate[1] == 6 || IntDate[1] == 9 || IntDate[1] == 11) && IntDate[0] > 30) {
-        std::cout << "The " << IntDate[1] << " month doesn't have 31 days bro =))" << std::endl;
-        return 0;
-    }
-    if (IntDate[1] == 2) {
-        if (!IsLeapYear(IntDate[2]) && IntDate[0] > 28) {
-            std::cout << "The " << IntDate[2] << " is not a leap year so it can only have 28 days bro" << std::endl;
-            return 0;
-        }
-        if (IsLeapYear(IntDate[2]) && IntDate[0] > 29) {
-            std::cout << "The " << IntDate[2] << " is a leap year, but it can only have 29 days but not " << IntDate[0] << " bro, double-check on that." << std::endl;
-            return 0;
-        }
-    }
-    return 1;
+		
+		// Handle valid value but in special case
+		if ( (IntDate[1] == 4 || IntDate[1] == 6 || IntDate[1] == 9 || IntDate[1] == 11) && IntDate[0] > 30) {
+			cout << "The " << IntDate[1] << " month does'nt have 31 days bro =))" << endl;
+			SetConsoleTextAttribute(hConsole, 7);
+			return 0;
+		} 
+		if ( !IsLeapYear(IntDate[2]) && IntDate[0] > 28 && IntDate[1] == 2 ) {
+			cout << "The " << IntDate[2] << " is not a leap year so the 2nd month can only have 28 days bro" << endl;
+			SetConsoleTextAttribute(hConsole, 7);
+			return 0; 
+		} 
+		if ( IsLeapYear(IntDate[2]) && IntDate[0] > 29 && IntDate[1] == 2 ) {
+			cout << "The " << IntDate[2] << " is a leap year, but the second month can only have 29 but not " << IntDate[0] << " bro, double-check on that." << endl;
+			SetConsoleTextAttribute(hConsole, 7);
+			return 0;
+		}
+		else {
+			SetConsoleTextAttribute(hConsole, 7);
+			return 1;
+		}
+		
 }
 
 int main() {
@@ -90,7 +106,7 @@ int main() {
         {"01/10/2023", "Valid"}, {"01/11/2023", "Valid"}, {"01/12/2023", "Valid"}, {"15/01/2023", "Valid"},
         {"15/02/2023", "Valid"}, {"15/03/2023", "Valid"}, {"15/04/2023", "Valid"}, {"15/05/2023", "Valid"},
         {"15/06/2023", "Valid"}, {"15/07/2023", "Valid"}, {"15/08/2023", "Valid"}, {"1", "Invalid"},
-        {"cas", "Invalid"}, {"0/0/0", "Invalid"}, {"0/12/2024", "Invalid"}, {"1/0/2024", "Invalid"}
+        {"cas", "Invalid"}, {"0/0/0", "Invalid"}, {"/12/2024", "Invalid"}, {"23/5/2024/23", "Invalid"}
         
     };
 
