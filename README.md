@@ -11,3 +11,5 @@ Version 1.0.0 first build
 		// Fixed some bugs
 + 24/5/2024 : Minor update 1.2.1
 		// Add 'close' command to close the app
++ 26/5/2024 : Update ver 1.2.2
++ 		// Add check empty out put feature // Fix some bugs
