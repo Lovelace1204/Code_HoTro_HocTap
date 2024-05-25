@@ -6,6 +6,8 @@ Version 1.0.0 first build
               // Re-arrange code-architect 
               // Standardize input feature added
 + 23/5/2024 : update Version 1.2.0
-		// Invalid date input handled
+		// Invalid date input ( not perfectly ) handled
 		// Re-arrange code-architect ( better to read:)
 		// Fixed some bugs
++ 24/5/2024 : Minor update 1.2.1
+		// Add 'close' command to close the app
