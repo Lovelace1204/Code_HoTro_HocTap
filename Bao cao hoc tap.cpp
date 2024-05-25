@@ -255,7 +255,7 @@ void DeleteEntry (vector<DailyReport>& reports) {
 }
 
 void DisplayHelp () {
-	SetConsoleTextAttribute(hConsole, 14);
+	SetConsoleTextAttribute(hConsole, 15);
 	cout << "Available command: " << endl;
 	cout << "HELP. . . . . . . . . . . . . . . . . . . . . . : Hien thi hop thoai nay" << endl;
 	cout << "ADD . . . . . . . . . . . . . . . . . . . . . . : Them thong tin vao BaoCao_HocTap"<< endl;
@@ -489,15 +489,16 @@ void StandardizeInput (string& input) {
 
 void ThangNaoLamRaCaiNay () {
 	       	
-   	SetConsoleTextAttribute(hConsole, 14);
+   	SetConsoleTextAttribute(hConsole, 15);
 	cout << "\n _Please stand by_ " << endl;
     cout << "===================" << endl;
     cout << " _Nguyen Hai Hung_ " << endl;
-    cout << "Powered by GPT_3.5, GPT_4thGen and GPT 4o" << endl;
+    cout << "\nPowered by GPT_3.5, GPT_4thGen and Gemini" << endl;
     cout << "Thanks for using the app :3" << endl;
     string s = "+";
     
    	// origin 0.06 0.025
+   	SetConsoleTextAttribute(hConsole, 12);
 	for ( float y = 1.3 ; y >= -1.1 ; y -= 0.12 ) {       			
 		int index = 0;
        	for ( float x = -1.2; x <= 1.2; x += 0.05 ) {
