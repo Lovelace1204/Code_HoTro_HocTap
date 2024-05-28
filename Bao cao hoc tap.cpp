@@ -521,15 +521,17 @@ void ThangNaoLamRaCaiNay () {
     string s = "+";
     
    	// origin 0.06 0.025
-   	SetConsoleTextAttribute(hConsole, 12);
+   	int set = 10;
 	for ( float y = 1.3 ; y >= -1.1 ; y -= 0.12 ) {       			
 		int index = 0;
        	for ( float x = -1.2; x <= 1.2; x += 0.05 ) {
 		
+		SetConsoleTextAttribute(hConsole, set); set++;
         if( pow((x*x+y*y-1.0),3) - x*x*y*y*y <= 0.0 )
             cout << s[(index++)%s.size()];
         else
        	    cout << ' ';
+       	if ( set == 15 ) set = 10;
 		}
        	cout << endl;
        		// author Yubo Liu
