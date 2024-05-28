@@ -124,27 +124,34 @@ void AddEntry(vector<DailyReport>& reports) {
 }
 
 void CheckRuntimeError (int& running) {
-	if ( running == 100 ) {
+	if ( running == 101 ) {
 			SetConsoleTextAttribute(hConsole, 14);
-			char CheckErr = ' ';
-			cout << endl << "(0_0)  Manual Check <the numbers of command has reached 1000>, every things is still okay? (y/n): ";
+			string CheckErr;
+			cout << endl << "(0_0)  Manual Check <the numbers of command has reached 100>, every things is still okay? (y/n): ";
 			cin >> CheckErr;
-			if ( CheckErr == 'y') {
+			
+			StandardizeInput(CheckErr);
+			
+			if ( CheckErr == "y") {
 				SetConsoleTextAttribute(hConsole, 10);
-				cout << "Im gald you worked so hard :), lets continue our works ^_^\n";
+				cout << "Im gald you worked so hard :), lets continue to work ^_^\n";
 				running = 1;
 				SetConsoleTextAttribute(hConsole, 7);
 			}
-			else if ( CheckErr == 'n') {
+			else if ( CheckErr == "n") {
 				SetConsoleTextAttribute(hConsole, 12);
 				running = StopCode;
-				cout << "Somethings went wrong. Stopped the program!";
+				cout << "The program has been stopped!" << endl;
+				cout << "Please notice us about that error, thanks for your help!" << endl;
+				cout << "Contact me via https://www.facebook.com/hung.bu.2k5/" << endl;
 				cout << "StopCode <" << running << ">\n";
 				SetConsoleTextAttribute(hConsole, 7);
 			} else {
 				SetConsoleTextAttribute(hConsole, 12);
 				running = StopCode;
-				cout << "\nInput CheckErr Expired time request!. The prorgam has been cancelled\n";
+				cout << "\nInput CheckErr time request expired!. The prorgam has been cancelled\n";
+				cout << "Please notice us about that error, thanks for your help!" << endl;
+				cout << "Contact me via https://www.facebook.com/hung.bu.2k5/" << endl;
 				cout << "=StopCode= <" << running << ">\n";
 				SetConsoleTextAttribute(hConsole, 7);
 			}
@@ -280,6 +287,7 @@ void DisplayHelp () {
 	cout << "HELP. . . . . . . . . . . . . . . . . . . . . . : Hien thi hop thoai nay" << endl;
 	cout << "ADD . . . . . . . . . . . . . . . . . . . . . . : Them thong tin vao BaoCao_HocTap"<< endl;
 	cout << "CLOSE . . . . . . . . . . . . . . . . . . . . . : Dong ung dung" << endl;
+	cout << "CLEAR . . . . . . . . . . . . . . . . . . . . . : Lam moi man hinh console" << endl;
 	cout << "DELETE. . . . . . . . . . . . . . . . . . . . . : Xoa bao cao" << endl;
 	cout << "EDIT. . . . . . . . . . . . . . . . . . . . . . : Chinh sua bao cao" << endl;
 	cout << "SHOW. . . . . . . . . . . . . . . . . . . . . . : Hien thi toan bo bao cao" << endl;
@@ -520,6 +528,7 @@ void ThangNaoLamRaCaiNay () {
     cout << " _Nguyen Hai Hung_ " << endl;
     cout << "\nPowered by GPT_3.5, GPT_4thGen and Gemini" << endl;
     cout << "Thanks for using the app :3" << endl;
+    cout << "Contact me via https://www.facebook.com/hung.bu.2k5/" << endl;
     string s = "+";
     
    	// origin 0.06 0.025
