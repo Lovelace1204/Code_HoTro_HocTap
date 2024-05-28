@@ -8,7 +8,7 @@
 
 
 #define CurrentYear 2024
-#define version "1.2.2"
+#define version "1.2.3"
 #define endl "\n"
 #define motivation cout << "\n\n \t-It's during our darkest moments that we must focus to see the light- \n\t\t\t\t\t\t\t\t-Aristotle Onassis-" << endl;
 #define StopCode 10101
@@ -183,6 +183,7 @@ void DeleteEntry (vector<DailyReport>& reports) {
 			cout << "Rethink one last time brother || ";
 			SetConsoleTextAttribute(hConsole, 192);
 			cout << "Nhap mat khau <Confidential>: ";
+			SetConsoleTextAttribute(hConsole, 204);
 			
 			
         	string PassCheck;
@@ -212,6 +213,7 @@ void DeleteEntry (vector<DailyReport>& reports) {
 				return;
         		
 			}
+			SetConsoleTextAttribute(hConsole, 7);
 			
 		} else if ( choice == 'n') {
 			SetConsoleTextAttribute(hConsole, 14);
