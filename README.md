@@ -16,4 +16,4 @@ Version 1.0.0 first build
 +		// Add check empty out put feature // Fix some bugs
 + 28/5/2024 : Update ver 1.2.3
 +		// Add colorful heart :,>
-+		// Confidential password now can't be seen when typing ( not perfectly )
++		// Confidential password now can't be seen when typing ( not perfectly secured )
