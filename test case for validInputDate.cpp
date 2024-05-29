@@ -26,6 +26,8 @@ int ValidDateInput (string date) {
 			int index = 0;
 			int IntDate[3] = {0};
 			int TempIndex = index;
+			
+			
 			for ( int i = 0; i < 3; i++) {
 				
 				while ( date[TempIndex] != '\0' && date[TempIndex] != '/' && date[TempIndex] != '-' && date[TempIndex] != EOF) {
@@ -50,7 +52,7 @@ int ValidDateInput (string date) {
 				SetConsoleTextAttribute(hConsole, 7);
 //				cout << "\n%%Die2" << endl;
 				return 0;
-			}
+			} 
 			else if ( IntDate[i] == 0) {
 //				cout << "\n%%Die4" << endl;
 				return 0;
@@ -61,8 +63,12 @@ int ValidDateInput (string date) {
 //				cout << "\n%%Die5" << " " << i << date[TempIndex] << endl;
 				return 0;
 			}
+			
 
 		}
+		
+		if ( IntDate[0] < 10 && date[0] != '0' ) return 0;
+		if ( IntDate[1] < 10 && date[3] != '0' ) return 0;
 		
 		// Handle valid value but in special case
 		if ( (IntDate[1] == 4 || IntDate[1] == 6 || IntDate[1] == 9 || IntDate[1] == 11) && IntDate[0] > 30) {
@@ -104,8 +110,8 @@ int main() {
         {"01/01/2023", "Valid"}, {"31/01/2023", "Valid"}, {"31/03/2023", "Valid"}, {"31/05/2023", "Valid"},
         {"31/07/2023", "Valid"}, {"31/08/2023", "Valid"}, {"31/10/2023", "Valid"}, {"01/12/2023", "Valid"},
         {"15/01/2024", "Valid"}, {"15/03/2024", "Valid"}, {"15/05/2024", "Valid"}, {"15/07/2024", "Valid"},
-        {"15/09/2024", "Valid"}, {"15/11/2024", "Valid"}, {"30/01/2024", "Valid"}, {"30/03/2024", "Valid"},
-        {"30/05/2024", "Valid"}, {"30/07/2024", "Valid"}, {"30/09/2024", "Valid"}, {"30/11/2024", "Valid"},
+        {"15/09/2024", "Valid"}, {"15/11/2024", "Valid"}, {"30/01/2024", "Valid"}, {"30/3/2024", "Invalid"},
+        {"30/05/2024", "Valid"}, {"30//2024", "Invalid"}, {"30/09/", "Invalid"}, {"3/11/2024", "Invalid"},
         {"29/02/2024", "Valid"}, {"28/02/2024", "Valid"}, {"28/02/2023", "Valid"}, {"30/12/2024", "Valid"},
         {"31/12/2024", "Valid"}, {"30/11/2024", "Valid"}, {"31/10/2024", "Valid"}, {"30/09/2024", "Valid"},
         {"31/08/2024", "Valid"}, {"31/07/2024", "Valid"}, {"30/06/2024", "Valid"}, {"31/05/2024", "Valid"},

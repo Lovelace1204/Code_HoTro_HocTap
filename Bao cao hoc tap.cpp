@@ -601,6 +601,9 @@ int ValidDateInput (string date) {
 
 		}
 		
+		if ( IntDate[0] < 10 && date[0] != '0' ) return 0;
+		if ( IntDate[1] < 10 && date[3] != '0' ) return 0;
+		
 		// Handle valid value but in special case
 		if ( (IntDate[1] == 4 || IntDate[1] == 6 || IntDate[1] == 9 || IntDate[1] == 11) && IntDate[0] > 30) {
 			cout << "The " << IntDate[1] << " month does'nt have 31 days bro =))" << endl;
@@ -670,6 +673,7 @@ int ValidDateInputForShow (string date) {
 			}
 
 		}
+		
 		
 		// Handle valid value but in special case
 		if ( (IntDate[1] == 4 || IntDate[1] == 6 || IntDate[1] == 9 || IntDate[1] == 11) && IntDate[0] > 30) {
