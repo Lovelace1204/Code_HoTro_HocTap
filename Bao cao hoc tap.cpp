@@ -8,7 +8,7 @@
 
 
 #define CurrentYear 2024
-#define version "1.2.3"
+#define version "1.2.4"
 #define endl "\n"
 #define motivation cout << "\n\n \t-It's during our darkest moments that we must focus to see the light- \n\t\t\t\t\t\t\t\t-Aristotle Onassis-" << endl;
 #define StopCode 10101
@@ -74,6 +74,10 @@ void EditEntry(vector<DailyReport>& reports);
 void SaveData(const vector<DailyReport>& reports, const string& filename);
 void ShowEntries(const vector<DailyReport>& reports);
 void StandardizeInput (string& input);
+
+
+int ValidDateInput (string date);
+int ValidDateInputForShow (string date);
 
 // Function to add a new entry to the data
 void AddEntry(vector<DailyReport>& reports) {
@@ -173,6 +177,8 @@ void DeleteEntry (vector<DailyReport>& reports) {
     
 	string CheckDate;
     cin >> CheckDate;
+    StandardizeInput(CheckDate);
+    
     if ( CheckDate != "all" && !ValidDateInput(CheckDate)) {
     	PrintInvalidDateInputError(CheckDate);
     	return;
@@ -185,7 +191,7 @@ void DeleteEntry (vector<DailyReport>& reports) {
         cout << "Nguoi ae co chac muon xoa tat ca lam lai tu dau? (y/n): ";
 		cin >> choice;
         
-		if ( choice == 'y') {
+		if ( choice == 'y' || choice == 'Y') {
 			SetConsoleTextAttribute(hConsole, 206); 
 			cout << "Rethink one last time brother || ";
 			SetConsoleTextAttribute(hConsole, 192);
@@ -204,25 +210,18 @@ void DeleteEntry (vector<DailyReport>& reports) {
 				motivation;
 				SetConsoleTextAttribute(hConsole, 7);
            	    
-     	    } else if ( PassWord != PassCheck ) {
+     	    } else {
      	    	SetConsoleTextAttribute(hConsole, 10);
      	        cout << "\nU forgot our secret. What happened bro ?" << endl;
-     	        cout << "We need to talk!" << endl;
      	        cout << "<Codeline-error-276>\n";
 				cout << "Yeu cau xoa du lieu da bi huy." << endl;
 				SetConsoleTextAttribute(hConsole, 7);
 				motivation;
 				
-      		} else {
-        		SetConsoleTextAttribute(hConsole, 12);
-				cout << "Password input is invalid denied-<DeleteEntry>" << endl << "Yeu cau xoa du lieu da bi huy." << endl;
-        		SetConsoleTextAttribute(hConsole, 7);
-				return;
-        		
-			}
+      		} 
 			SetConsoleTextAttribute(hConsole, 7);
 			
-		} else if ( choice == 'n') {
+		} else if ( choice == 'n' || choice == 'N') {
 			SetConsoleTextAttribute(hConsole, 14);
         	cout << "Data status-<no update>." << endl << "Relax bro, U should go out side and \"comeback\"." << endl;
         	SetConsoleTextAttribute(hConsole, 7);
@@ -441,7 +440,7 @@ void SaveData (const vector<DailyReport>& reports, const string& filename) {
 
 void PrintInvalidDateInputError ( string CheckDate ) {
 	SetConsoleTextAttribute(hConsole, 12);
-	cout << "The '" << CheckDate << "' input is invalid, please type in date as DD/MM/YYYY of DD-MM-YYYY" << endl;
+	cout << "The input '" << CheckDate << "' is invalid, please type in date as DD/MM/YYYY of DD-MM-YYYY" << endl;
 	cout << "Invalid DateInput <ErrorCode-472>" << endl;
 	SetConsoleTextAttribute(hConsole, 7);
 	return;
@@ -456,17 +455,18 @@ void ShowEntries (const vector<DailyReport>& reports) {
     }
 
     cout << "Nhap 'all' de show tat ca hoac nhap ngay de show du lieu cua ngay do: ";
-    string input;
-    
+  
     string CheckDate;
     cin >> CheckDate;
-    if ( CheckDate != "all" && !ValidDateInput(CheckDate)) {
+    StandardizeInput(CheckDate);
+    
+    if ( CheckDate != "all" && !ValidDateInputForShow(CheckDate)) {
     	PrintInvalidDateInputError(CheckDate);
     	return;
 	}
 	
-	input = CheckDate;
-
+	string input = CheckDate;
+	
     if (input == "all") {
         
 		for (const auto& entry : reports) {
@@ -562,35 +562,42 @@ int ValidDateInput (string date) {
 			int TempIndex = index;
 			for ( int i = 0; i < 3; i++) {
 				
-				while ( date[TempIndex] != '\0' && date[TempIndex] != '/' && date[TempIndex] != '-') {
+				while ( date[TempIndex] != '\0' && date[TempIndex] != '/' && date[TempIndex] != '-' && date[TempIndex] != EOF) {
 					
-					if ( date[TempIndex] < '0' || date[TempIndex] > '9' ) return 0;
+					if ( date[TempIndex] < '0' || date[TempIndex] > '9' ) {
+//						cout << "\n%%Die0" << endl;
+						return 0;
+					}
 					
 					IntDate[i] = IntDate[i]*10 + (date[TempIndex]-48);
 					TempIndex++;
 				}
 				
-			if (i == 0 && (IntDate[i] < 0 || IntDate[i] > 31)) {
+			if (i == 0 && (IntDate[0] < 0 || IntDate[0] > 31)) {
 				cout << "Day " << IntDate[0] << " exist ? bro u serious?:)" << endl;
 				SetConsoleTextAttribute(hConsole, 7);
+//				cout << "\n%%Die1" << endl;
 				return 0;
 			}
-			else if (i == 1 && (IntDate[i] < 0 || IntDate[i] > 12)) {
+			else if (i == 1 && (IntDate[1] < 0 || IntDate[1] > 12)) {
 				cout << "Month " << IntDate[1] << " exist ? bro u serious?:)" << endl;
 				SetConsoleTextAttribute(hConsole, 7);
+//				cout << "\n%%Die2" << endl;
 				return 0;
+			} else if ( i == 2 && IntDate[2] != CurrentYear ) {
+				cout << "Bro living in " << IntDate[2] << " =))?? R you serious" << endl;
+				cout << "The lastest valid year for this update is " << CurrentYear << " | Ver : " << version << endl;
 			}
-			else if (i == 2 && IntDate[2] != CurrentYear) {
-   			 	cout << "U living in " << IntDate[2] << "  ? bro u serious =))? <This last updated verion is in " << CurrentYear << ">" << "- Ver : " << version << endl;
-   			 	SetConsoleTextAttribute(hConsole, 7);
-   			 	return 0;
-			} 
 			else if ( IntDate[i] == 0) {
+//				cout << "\n%%Die4" << endl;
 				return 0;
 			}
 			else TempIndex++;
 			
-			if ( i == 2 && date[TempIndex] != '\0') return 0;
+			if ( i == 2 && date[TempIndex-1] != '\0') {
+//				cout << "\n%%Die5" << " " << i << date[TempIndex] << endl;
+				return 0;
+			}
 
 		}
 		
@@ -598,16 +605,19 @@ int ValidDateInput (string date) {
 		if ( (IntDate[1] == 4 || IntDate[1] == 6 || IntDate[1] == 9 || IntDate[1] == 11) && IntDate[0] > 30) {
 			cout << "The " << IntDate[1] << " month does'nt have 31 days bro =))" << endl;
 			SetConsoleTextAttribute(hConsole, 7);
+//			cout << "\n%%Die6" << endl;
 			return 0;
 		} 
-		else if ( !IsLeapYear(IntDate[2]) && IntDate[0] > 28 ) {
-			cout << "The " << IntDate[2] << " is not a leap year so it can only have 28 days bro" << endl;
+		else if ( !IsLeapYear(IntDate[2]) && IntDate[1] == 2 && IntDate[0] > 28 ) {
+			cout << "The " << IntDate[2] << " is not a leap year so february can only have 28 days bro" << endl;
 			SetConsoleTextAttribute(hConsole, 7);
+//			cout << "\n%%Die7" << endl;
 			return 0; 
 		} 
-		else if ( IsLeapYear(IntDate[2]) && IntDate[0] > 29 ) {
-			cout << "The " << IntDate[2] << " is a leap year, but it only can have 29 but not " << IntDate[0] << " bro, double-check on that." << endl;
+		else if ( IsLeapYear(IntDate[2]) && IntDate[1] == 2 && IntDate[0] > 29 ) {
+			cout << "The " << IntDate[2] << " is a leap year, but february it only can have 29 but not " << IntDate[0] << " bro, double-check on that." << endl;
 			SetConsoleTextAttribute(hConsole, 7);
+//			cout << "\n%%Die8" << endl;
 			return 0;
 		}
 		else {
@@ -617,6 +627,75 @@ int ValidDateInput (string date) {
 		
 }
 
+// DD/MM/YYYY
+int ValidDateInputForShow (string date) {
+	        SetConsoleTextAttribute(hConsole, 10);
+			int index = 0;
+			int IntDate[3] = {0};
+			int TempIndex = index;
+			for ( int i = 0; i < 3; i++) {
+				
+				while ( date[TempIndex] != '\0' && date[TempIndex] != '/' && date[TempIndex] != '-' && date[TempIndex] != EOF) {
+					
+					if ( date[TempIndex] < '0' || date[TempIndex] > '9' ) {
+//						cout << "\n%%Die0" << endl;
+						return 0;
+					}
+					
+					IntDate[i] = IntDate[i]*10 + (date[TempIndex]-48);
+					TempIndex++;
+				}
+				
+			if (i == 0 && (IntDate[0] < 0 || IntDate[0] > 31)) {
+				cout << "Day " << IntDate[0] << " exist ? bro u serious?:)" << endl;
+				SetConsoleTextAttribute(hConsole, 7);
+//				cout << "\n%%Die1" << endl;
+				return 0;
+			}
+			else if (i == 1 && (IntDate[1] < 0 || IntDate[1] > 12)) {
+				cout << "Month " << IntDate[1] << " exist ? bro u serious?:)" << endl;
+				SetConsoleTextAttribute(hConsole, 7);
+//				cout << "\n%%Die2" << endl;
+				return 0;
+			}
+			else if ( IntDate[i] == 0) {
+//				cout << "\n%%Die4" << endl;
+				return 0;
+			}
+			else TempIndex++;
+			
+			if ( i == 2 && date[TempIndex-1] != '\0') {
+//				cout << "\n%%Die5" << " " << i << date[TempIndex] << endl;
+				return 0;
+			}
+
+		}
+		
+		// Handle valid value but in special case
+		if ( (IntDate[1] == 4 || IntDate[1] == 6 || IntDate[1] == 9 || IntDate[1] == 11) && IntDate[0] > 30) {
+			cout << "The " << IntDate[1] << " month does'nt have 31 days bro =))" << endl;
+			SetConsoleTextAttribute(hConsole, 7);
+//			cout << "\n%%Die6" << endl;
+			return 0;
+		} 
+		else if ( !IsLeapYear(IntDate[2]) && IntDate[1] == 2 && IntDate[0] > 28 ) {
+			cout << "The " << IntDate[2] << " is not a leap year so february can only have 28 days bro" << endl;
+			SetConsoleTextAttribute(hConsole, 7);
+//			cout << "\n%%Die7" << endl;
+			return 0; 
+		} 
+		else if ( IsLeapYear(IntDate[2]) && IntDate[1] == 2 && IntDate[0] > 29 ) {
+			cout << "The " << IntDate[2] << " is a leap year, but february it only can have 29 but not " << IntDate[0] << " bro, double-check on that." << endl;
+			SetConsoleTextAttribute(hConsole, 7);
+//			cout << "\n%%Die8" << endl;
+			return 0;
+		}
+		else {
+			SetConsoleTextAttribute(hConsole, 7);
+			return 1;
+		}
+		
+}
 
 int main() {
     

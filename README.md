@@ -17,3 +17,5 @@ Version 1.0.0 first build
 + 28/5/2024 : Update ver 1.2.3
 +		// Add colorful heart :,>
 +		// Confidential password now can't be seen when typing ( not perfectly secured )
++ 29/5/2024 : Update ver 1.2.4
++		// Fixed some critical bugs on ValidDate check
