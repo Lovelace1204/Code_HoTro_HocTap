@@ -20,4 +20,4 @@ Version 1.0.0 first build
 + 29/5/2024 : Update ver 1.2.4
 +		// Fixed some critical bugs on ValidDate check
 + 23/6/2024 : Update ver 1.2.5
-+		// Add "AddDotAfter" for better appearance :) ( also for automated align ) 
++		// Add "AddDotAfter" function for better appearance :) ( also for automated align ) 
