@@ -174,7 +174,8 @@ void displayPlanTimeErr () {
 	SetConsoleTextAttribute(hConsole, 12);
 	cout << "No subject or plan was set at this time!" << endl;
 	cout << "The first added is the 2nd semester, the lastest yet is the 3rd one" << endl;
-	cout << "All vary from 15/01/2024 -> now";
+	cout << "All vary from 15/01/2024 -> now" << endl;
+	cout << "Please consider double-check the time" << endl;
 	SetConsoleTextAttribute(hConsole, 7);
 }
 
@@ -203,9 +204,7 @@ void AddEntry(vector<SubName>& reports) {
 	SubName name = specify(newEntry);
 	
 	if ( name.s1.empty() ) {
-		SetConsoleTextAttribute(hConsole, 12);
-		cout << "No subject or plan was set at this time!" << endl;
-		SetConsoleTextAttribute(hConsole, 7);
+		displayPlanTimeErr();
   	 	reports.push_back(newEntry);
    		return;
 	}
@@ -214,7 +213,7 @@ void AddEntry(vector<SubName>& reports) {
 
 	if ( name.s2.empty() ) {
     	reports.push_back(newEntry);
-    	
+    	displayInputIntake();
    	 	return;
 	}
 	cout << FillDotAfter(name.s2) << " : ";
@@ -222,6 +221,7 @@ void AddEntry(vector<SubName>& reports) {
 
 	if ( name.s3.empty() ) {
     	reports.push_back(newEntry);
+    	displayInputIntake();
     	return;
 	}
 	cout << FillDotAfter(name.s3) << " : ";
@@ -229,6 +229,7 @@ void AddEntry(vector<SubName>& reports) {
 
 	if ( name.s4.empty() ) {
     	reports.push_back(newEntry);
+    	displayInputIntake();
     	return;
 	}
 	cout << FillDotAfter(name.s4) << " : ";
@@ -236,42 +237,48 @@ void AddEntry(vector<SubName>& reports) {
 
 	if ( name.s5.empty() ) {
     	reports.push_back(newEntry);
-    	return;
+    	displayInputIntake();
+		return;
 	}
 	cout << FillDotAfter(name.s5) << " : ";
 	getline(cin, newEntry.s5);
 
 	if ( name.s6.empty() ) {
     	reports.push_back(newEntry);
-    	return;
+    	displayInputIntake();
+		return;
 	}
 	cout << FillDotAfter(name.s6) << " : ";
 	getline(cin, newEntry.s6);
 
 	if ( name.s7.empty() ) {
    	 	reports.push_back(newEntry);
-    	return;
+    	displayInputIntake();
+		return;
 	}
 	cout << FillDotAfter(name.s7) << " : ";
 	getline(cin, newEntry.s7);
 
 	if ( name.s8.empty() ) {
     	reports.push_back(newEntry);
-    	return;
+    	displayInputIntake();
+		return;
 	}
 	cout << FillDotAfter(name.s8) << " : ";
 	getline(cin, newEntry.s8);
 
 	if ( name.s9.empty() ) {
     	reports.push_back(newEntry);
-    	return;
+    	displayInputIntake();
+		return;
 	}
 	cout << FillDotAfter(name.s9) << " : ";
 	getline(cin, newEntry.s9);
 
 	if ( name.s10.empty() ) {
     	reports.push_back(newEntry);
-    	return;
+    	displayInputIntake();
+		return;
 	}
 	cout << FillDotAfter(name.s10) << " : ";
 	getline(cin, newEntry.s10);
