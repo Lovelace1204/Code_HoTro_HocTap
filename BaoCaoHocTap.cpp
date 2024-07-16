@@ -61,7 +61,7 @@ struct SubName {
     
 };
 
-struct SubName k2 = {
+struct SubName ki2 = {
 							.s1 = "Kinh te chinh tri",
 							.s2 = "Vat ly ung dung",
 							.s3 = "Ky thuat so",
@@ -118,11 +118,9 @@ int ValidDateInputForShow (string date);
 
 SubName specify ( SubName sub ) {
 	
-	
 	string date = sub.DATE;
-	int index = 0;
 	int intDate[3] = {0};
-	int TempIndex = index;
+	int TempIndex = 0;
 	for ( int i = 0; i < 3; i++) {
 		
 		while ( date[TempIndex] != '\0' && date[TempIndex] != '/' && date[TempIndex] != '-' && date[TempIndex] != EOF) {
@@ -130,16 +128,55 @@ SubName specify ( SubName sub ) {
 			intDate[i] = intDate[i]*10 + (date[TempIndex]-48);
 			TempIndex++;
 		}
+		
+		TempIndex++;
     }
 //ki 2 bat dau tu 15/01/2024 -> 14/07/2024
 // ki he tu 15/7/2024 -> 11/08/2024
 // ki 3 tu 12/08/2024 -> unknown  
 	
 	// check ki 2
-//	if ( )
-	return sub;
+	if ( intDate[2] == 2024 ) {
+		// 2024 : ki2 || ki3 || kihe
+		if ( (intDate[1] > 1 && intDate[1] < 7) || ((intDate[1] == 1 && intDate[0] >= 15) || (intDate[1] == 7 && intDate[0] <= 14)) ) {
+			// ki 2
+			return ki2;
+		} 
+		else if (( intDate[1] == 7 && intDate[0] >= 15) || (intDate[1] == 8 && intDate[0] <= 11)) {
+			// ki he
+			return kihe;
+		}
+		else if ( intDate[1] == 8 && intDate[0] >= 12 ) {
+			// ki 3 -> so on
+			return ki3;
+		} 
+		else if ( intDate[1] > 8 ){
+			return ki3;
+		} 
+		else {
+			return sub;
+		}
+		
+	} else {
+		// update later
+		return sub;
+	}
+	
 }
 	
+void displayInputIntake () {
+	SetConsoleTextAttribute(hConsole, 10);
+    cout << "Du lieu da duoc luu vao thanh cong!\n";
+    SetConsoleTextAttribute(hConsole, 7);
+}
+
+void displayPlanTimeErr () {
+	SetConsoleTextAttribute(hConsole, 12);
+	cout << "No subject or plan was set at this time!" << endl;
+	cout << "The first added is the 2nd semester, the lastest yet is the 3rd one" << endl;
+	cout << "All vary from 15/01/2024 -> now";
+	SetConsoleTextAttribute(hConsole, 7);
+}
 
 // Function to add a new entry to the data
 void AddEntry(vector<SubName>& reports) {
@@ -163,17 +200,86 @@ void AddEntry(vector<SubName>& reports) {
 
     cin.ignore(); // Clear the newline character from the input buffer
 	
-	SubName subName = specify(newEntry);
+	SubName name = specify(newEntry);
 	
-    cout << FillDotAfter(subName.s1) << " : ";
-    getline(cin, newEntry.s1);
+	if ( name.s1.empty() ) {
+		SetConsoleTextAttribute(hConsole, 12);
+		cout << "No subject or plan was set at this time!" << endl;
+		SetConsoleTextAttribute(hConsole, 7);
+  	 	reports.push_back(newEntry);
+   		return;
+	}
+	cout << FillDotAfter(name.s1) << " : ";
+	getline(cin, newEntry.s1);
+
+	if ( name.s2.empty() ) {
+    	reports.push_back(newEntry);
+    	
+   	 	return;
+	}
+	cout << FillDotAfter(name.s2) << " : ";
+	getline(cin, newEntry.s2);
+
+	if ( name.s3.empty() ) {
+    	reports.push_back(newEntry);
+    	return;
+	}
+	cout << FillDotAfter(name.s3) << " : ";
+	getline(cin, newEntry.s3);
+
+	if ( name.s4.empty() ) {
+    	reports.push_back(newEntry);
+    	return;
+	}
+	cout << FillDotAfter(name.s4) << " : ";
+	getline(cin, newEntry.s4);
+
+	if ( name.s5.empty() ) {
+    	reports.push_back(newEntry);
+    	return;
+	}
+	cout << FillDotAfter(name.s5) << " : ";
+	getline(cin, newEntry.s5);
+
+	if ( name.s6.empty() ) {
+    	reports.push_back(newEntry);
+    	return;
+	}
+	cout << FillDotAfter(name.s6) << " : ";
+	getline(cin, newEntry.s6);
+
+	if ( name.s7.empty() ) {
+   	 	reports.push_back(newEntry);
+    	return;
+	}
+	cout << FillDotAfter(name.s7) << " : ";
+	getline(cin, newEntry.s7);
+
+	if ( name.s8.empty() ) {
+    	reports.push_back(newEntry);
+    	return;
+	}
+	cout << FillDotAfter(name.s8) << " : ";
+	getline(cin, newEntry.s8);
+
+	if ( name.s9.empty() ) {
+    	reports.push_back(newEntry);
+    	return;
+	}
+	cout << FillDotAfter(name.s9) << " : ";
+	getline(cin, newEntry.s9);
+
+	if ( name.s10.empty() ) {
+    	reports.push_back(newEntry);
+    	return;
+	}
+	cout << FillDotAfter(name.s10) << " : ";
+	getline(cin, newEntry.s10);
+
 
     
     reports.push_back(newEntry);
 
-    SetConsoleTextAttribute(hConsole, 10);
-    cout << "Du lieu da duoc luu vao thanh cong!\n";
-    SetConsoleTextAttribute(hConsole, 7);
     // motivation;
 }
 
@@ -427,7 +533,7 @@ void DisplayInvalidCommandError () {
 //    SetConsoleTextAttribute(hConsole, 7);
 //}
 
-const int LABEL_WIDTH = 25;  // Adjust the width as needed
+const int LABEL_WIDTH = 50;  // Adjust the width as needed
 
 string FillDotAfter (const string& label) {
     string result = label;
