@@ -15,6 +15,7 @@
 // stop code is printout in case the program gives exceed ouput or any malfuntion, please check the main function and CheckRuntimeError() 
 #define PassWord "12042005" // Confidential
 
+
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 // color text handle 
 // SetConsoleTextAttribute(hConsole, 12) <key>
@@ -44,54 +45,105 @@ using namespace std;
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-struct DailyReport {
-    string DATE;
-    string APP_DEV;
-    string CODE;
-    string GIAI_TICH2;
-    string KINH_TE_CHINH_TRI;
-    string KY_THUAT_SO;
-    string OTHER_CODE;
-    string SELF_DEV;
-    string NOTE;
+struct SubName {
+	string DATE;
+	
+	string s1;
+    string s2;
+    string s3;
+    string s4;
+    string s5;
+    string s6;
+    string s7;
+    string s8;
+    string s9;
+    string s10;
+    
+};
+
+struct SubName k2 = {
+							.s1 = "Kinh te chinh tri",
+							.s2 = "Vat ly ung dung",
+							.s3 = "Ky thuat so",
+							.s4 = "Giai tich 2",
+							.s5 = "Tin hoc co so 2",
+							.s6 = "Phap luat dai cuong",
+};
+
+struct SubName ki3 = {		.s1 = "Chu nghia xa hoi khoa hoc",
+							.s2 = "Xac suat thong ke",
+							.s3 = "Xu ly tin hieu so",
+							.s4 = "C++",
+							.s5 = "Toan roi rac 1",
+							.s6 = "Ky nang thuyet trinh",
+};
+
+struct SubName kihe = {		.s1 = "Project",
+							.s2 = "Code C",
+							.s3 = "IT related knowledge / Sth in4mative / positive",
+							.s4 = "Self dev",
 };
 
 int ValidDateInput (string date);
 void PrintInvalidDateInputError (string CheckDate);
 
 
-// Feature funtion
-void AddEntry(vector<DailyReport>& reports);
+// Feature funtions
+void AddEntry(vector<SubName>& reports);
 
 void ClearScreen (string filename);
 
-void DeleteEntry(vector<DailyReport>& reports, const string& input);
+void DeleteEntry(vector<SubName>& reports, const string& input);
 void DisplayData (string data);
 void DisplayHelp ();
 
-void EditEntry(vector<DailyReport>& reports);
+void EditEntry(vector<SubName>& reports);
 
-void SaveData(const vector<DailyReport>& reports, const string& filename);
-void ShowEntries(const vector<DailyReport>& reports);
+string FillDotAfter (const string& label);
+
+void SaveData(const vector<SubName>& reports, const string& filename);
+void ShowEntries(const vector<SubName>& reports);
 void StandardizeInput (string& input);
 
 
 int ValidDateInput (string date);
 int ValidDateInputForShow (string date);
 
-const int LABEL_WIDTH = 25;  // Adjust the width as needed
+//SubName specify ( SubName test ) {
+//	test.s1 = "1";
+//	test.s2 = "2";
+//	
+//	return test;
+//}
 
-string FillDotAfter (const string& label) {
-    string result = label;
-    int DotCount = LABEL_WIDTH - label.length() - 1; // Subtract 1 for the colon
-    result.append(DotCount, '.');
-//    result.append(": ");
-    return result;
+SubName specify ( SubName sub ) {
+	
+	
+	string date = sub.DATE;
+	int index = 0;
+	int intDate[3] = {0};
+	int TempIndex = index;
+	for ( int i = 0; i < 3; i++) {
+		
+		while ( date[TempIndex] != '\0' && date[TempIndex] != '/' && date[TempIndex] != '-' && date[TempIndex] != EOF) {
+					
+			intDate[i] = intDate[i]*10 + (date[TempIndex]-48);
+			TempIndex++;
+		}
+    }
+//ki 2 bat dau tu 15/01/2024 -> 14/07/2024
+// ki he tu 15/7/2024 -> 11/08/2024
+// ki 3 tu 12/08/2024 -> unknown  
+	
+	// check ki 2
+//	if ( )
+	return sub;
 }
+	
 
 // Function to add a new entry to the data
-void AddEntry(vector<DailyReport>& reports) {
-    DailyReport newEntry;
+void AddEntry(vector<SubName>& reports) {
+    SubName newEntry;
 
     while (true) {
         cout << FillDotAfter("Date") << " : ";
@@ -110,31 +162,13 @@ void AddEntry(vector<DailyReport>& reports) {
     }
 
     cin.ignore(); // Clear the newline character from the input buffer
+	
+	SubName subName = specify(newEntry);
+	
+    cout << FillDotAfter(subName.s1) << " : ";
+    getline(cin, newEntry.s1);
 
-    cout << FillDotAfter("App dev") << " : ";
-    getline(cin, newEntry.APP_DEV);
-
-    cout << FillDotAfter("Code") << " : ";
-    getline(cin, newEntry.CODE);
-
-    cout << FillDotAfter("Giai tich 2") << " : ";
-    getline(cin, newEntry.GIAI_TICH2);
-
-    cout << FillDotAfter("Kinh te chinh tri") << " : ";
-    getline(cin, newEntry.KINH_TE_CHINH_TRI);
-
-    cout << FillDotAfter("Ky thuat so") << " : ";
-    getline(cin, newEntry.KY_THUAT_SO);
-
-    cout << FillDotAfter("Other code") << " : ";
-    getline(cin, newEntry.OTHER_CODE);
-
-    cout << FillDotAfter("Self dev") << " : ";
-    getline(cin, newEntry.SELF_DEV);
-
-    cout << FillDotAfter("Note") << " : ";
-    getline(cin, newEntry.NOTE);
-
+    
     reports.push_back(newEntry);
 
     SetConsoleTextAttribute(hConsole, 10);
@@ -187,7 +221,7 @@ void ClearScreen (string filename) {
 }
 
 // Function to delete data
-void DeleteEntry (vector<DailyReport>& reports) {
+void DeleteEntry (vector<SubName>& reports) {
     string input;
     cout << "Nhap 'all' de xoa tat ca hoac nhap ngay de xoa du lieu cua ngay do: ";
     
@@ -321,139 +355,149 @@ void DisplayInvalidCommandError () {
 	SetConsoleTextAttribute(hConsole, 7);
 	return;
 }
+//
+//void EditEntry (vector<SubName>& reports) {
+//    string editDate;
+//    cout << "Nhap ngay ban muon thay doi du lieu: ";
+//    
+//    string CheckDate;
+//    cin >> CheckDate;
+//    if ( !ValidDateInput(CheckDate)) {
+//    	PrintInvalidDateInputError(CheckDate);
+//    	return;
+//	}
+//	
+//	editDate = CheckDate;
+//
+//    bool found = false;
+//    for (auto& entry : reports) {
+//        if (entry.DATE == editDate) {
+//            // Show original data
+//            cout << "Du lieu goc ngay "  << entry.DATE << endl;
+//            cout << "App dev            : " << entry.APP_DEV << endl;
+//            cout << "Code               : " << entry.CODE << endl;
+//            cout << "Giai tich 2        : " << entry.GIAI_TICH2 << endl;
+//            cout << "Kinh te chinh tri  : " << entry.KINH_TE_CHINH_TRI << endl;
+//            cout << "Ky thuat so        : " << entry.KY_THUAT_SO << endl;
+//            cout << "Other code         : " << entry.OTHER_CODE << endl;
+//            cout << "Self dev           : " << entry.SELF_DEV << endl;
+//            cout << "Note               : " << entry.NOTE << endl;
+//
+//            // Let the user type new data
+//            cout << "\nNhap du lieu moi:\n";
+//
+//            cout << "App dev        : ";
+//            cin.ignore();
+//            getline(cin, entry.APP_DEV);
+//
+//            cout << "Code           : ";
+//            getline(cin, entry.CODE);
+//
+//            cout << "Giai tich 2    : ";
+//            getline(cin, entry.GIAI_TICH2);
+//
+//            cout << "Kinh te chinh  : ";
+//            getline(cin, entry.KINH_TE_CHINH_TRI);
+//
+//            cout << "Ky thuat so    : ";
+//            getline(cin, entry.KY_THUAT_SO);
+//
+//            cout << "Other code     : ";
+//            getline(cin, entry.OTHER_CODE);
+//
+//            cout << "Self dev       : ";
+//            getline(cin, entry.SELF_DEV);
+//
+//            cout << "Note           : ";
+//            getline(cin, entry.NOTE);
+//
+//
+//			SetConsoleTextAttribute(hConsole, 10);
+//            cout << "Du lieu da duoc cap nhat thanh cong!\n";
+//        //    motivation;
+//            found = true;
+//            break;
+//        }
+//    }
+//
+//    if (!found) {
+//    	SetConsoleTextAttribute(hConsole, 12);
+//        cout << "Khong co du lieu ton tai ngay " << editDate << ", nguoi ae xem lai xem nao" << endl;
+//    }
+//    SetConsoleTextAttribute(hConsole, 7);
+//}
 
-void EditEntry (vector<DailyReport>& reports) {
-    string editDate;
-    cout << "Nhap ngay ban muon thay doi du lieu: ";
-    
-    string CheckDate;
-    cin >> CheckDate;
-    if ( !ValidDateInput(CheckDate)) {
-    	PrintInvalidDateInputError(CheckDate);
-    	return;
-	}
-	
-	editDate = CheckDate;
+const int LABEL_WIDTH = 25;  // Adjust the width as needed
 
-    bool found = false;
-    for (auto& entry : reports) {
-        if (entry.DATE == editDate) {
-            // Show original data
-            cout << "Du lieu goc ngay "  << entry.DATE << endl;
-            cout << "App dev            : " << entry.APP_DEV << endl;
-            cout << "Code               : " << entry.CODE << endl;
-            cout << "Giai tich 2        : " << entry.GIAI_TICH2 << endl;
-            cout << "Kinh te chinh tri  : " << entry.KINH_TE_CHINH_TRI << endl;
-            cout << "Ky thuat so        : " << entry.KY_THUAT_SO << endl;
-            cout << "Other code         : " << entry.OTHER_CODE << endl;
-            cout << "Self dev           : " << entry.SELF_DEV << endl;
-            cout << "Note               : " << entry.NOTE << endl;
-
-            // Let the user type new data
-            cout << "\nNhap du lieu moi:\n";
-
-            cout << "App dev        : ";
-            cin.ignore();
-            getline(cin, entry.APP_DEV);
-
-            cout << "Code           : ";
-            getline(cin, entry.CODE);
-
-            cout << "Giai tich 2    : ";
-            getline(cin, entry.GIAI_TICH2);
-
-            cout << "Kinh te chinh  : ";
-            getline(cin, entry.KINH_TE_CHINH_TRI);
-
-            cout << "Ky thuat so    : ";
-            getline(cin, entry.KY_THUAT_SO);
-
-            cout << "Other code     : ";
-            getline(cin, entry.OTHER_CODE);
-
-            cout << "Self dev       : ";
-            getline(cin, entry.SELF_DEV);
-
-            cout << "Note           : ";
-            getline(cin, entry.NOTE);
-
-
-			SetConsoleTextAttribute(hConsole, 10);
-            cout << "Du lieu da duoc cap nhat thanh cong!\n";
-        //    motivation;
-            found = true;
-            break;
-        }
-    }
-
-    if (!found) {
-    	SetConsoleTextAttribute(hConsole, 12);
-        cout << "Khong co du lieu ton tai ngay " << editDate << ", nguoi ae xem lai xem nao" << endl;
-    }
-    SetConsoleTextAttribute(hConsole, 7);
+string FillDotAfter (const string& label) {
+    string result = label;
+    int DotCount = LABEL_WIDTH - label.length() - 1; // Subtract 1 for the colon
+    result.append(DotCount, '.');
+//    result.append(": ");
+    return result;
 }
 
 bool IsLeapYear(int year) {
    if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) return true;
    else return false;
 }
-
-// Function to load data from a file
-void LoadData (vector<DailyReport>& reports, const string& filename) {
-    ifstream file(filename);
-    SetConsoleTextAttribute(hConsole, 10);
-    if (file.is_open()) {
-        
-		
-	    reports.clear(); // Clear existing data
-
-        DailyReport entry;
-        while (file >> entry.DATE >> ws
-                    && getline(file, entry.APP_DEV) 
-                    && getline(file, entry.CODE) 
-                    && getline(file, entry.GIAI_TICH2) 
-                    && getline(file, entry.KINH_TE_CHINH_TRI) 
-                    && getline(file, entry.KY_THUAT_SO) 
-                    && getline(file, entry.OTHER_CODE) 
-                    && getline(file, entry.SELF_DEV) 
-                    && getline(file, entry.NOTE)) {
-            reports.push_back(entry); 
-        }
-        file.close();
-        cout << "Du lieu duoc lay tu " << filename << endl;
-        SetConsoleTextAttribute(hConsole, 14);
-        motivation;
-    } else {
-    	SetConsoleTextAttribute(hConsole, 12);
-        cerr << "Khong the mo file de load data. <create-mode>BaoCao_HocTap.text" << endl;
-    }
-    SetConsoleTextAttribute(hConsole, 7);
-}
-
-// Function to save data to a file
-void SaveData (const vector<DailyReport>& reports, const string& filename) {
-    ofstream file(filename);
-
-    if (file.is_open()) {
-        for (const auto& entry : reports) {
-            file << entry.DATE << '\n';
-            file << entry.APP_DEV << '\n';
-            file << entry.CODE << '\n';
-            file << entry.GIAI_TICH2 << '\n';
-            file << entry.KINH_TE_CHINH_TRI << '\n';
-            file << entry.KY_THUAT_SO << '\n';
-            file << entry.OTHER_CODE << '\n';
-            file << entry.SELF_DEV << '\n';
-            file << entry.NOTE << '\n';
-        }
-        file.close();
-     //   cout << filename << " saved successfully!" << endl;
-    } else {
-    	SetConsoleTextAttribute(hConsole, 12);
-        cerr << "Khong the mo file luu du lieu .<CodeLine-220>" << endl;
-        SetConsoleTextAttribute(hConsole, 7);
-    }
-}
+//
+//// Function to load data from a file
+//void LoadData (vector<SubName>& reports, const string& filename) {
+//    ifstream file(filename);
+//    SetConsoleTextAttribute(hConsole, 10);
+//    if (file.is_open()) {
+//        
+//		
+//	    reports.clear(); // Clear existing data
+//
+//        SubName entry;
+//        while (file >> entry.DATE >> ws
+//                    && getline(file, entry.APP_DEV) 
+//                    && getline(file, entry.CODE) 
+//                    && getline(file, entry.GIAI_TICH2) 
+//                    && getline(file, entry.KINH_TE_CHINH_TRI) 
+//                    && getline(file, entry.KY_THUAT_SO) 
+//                    && getline(file, entry.OTHER_CODE) 
+//                    && getline(file, entry.SELF_DEV) 
+//                    && getline(file, entry.NOTE)) {
+//            reports.push_back(entry); 
+//        }
+//        file.close();
+//        cout << "Du lieu duoc lay tu " << filename << endl;
+//        SetConsoleTextAttribute(hConsole, 14);
+//        motivation;
+//    } else {
+//    	SetConsoleTextAttribute(hConsole, 12);
+//        cerr << "Khong the mo file de load data. <create-mode>BaoCao_HocTap.text" << endl;
+//    }
+//    SetConsoleTextAttribute(hConsole, 7);
+//}
+//
+//// Function to save data to a file
+//void SaveData (const vector<SubName>& reports, const string& filename) {
+//    ofstream file(filename);
+//
+//    if (file.is_open()) {
+//        for (const auto& entry : reports) {
+//            file << entry.DATE << '\n';
+//            file << entry.APP_DEV << '\n';
+//            file << entry.CODE << '\n';
+//            file << entry.GIAI_TICH2 << '\n';
+//            file << entry.KINH_TE_CHINH_TRI << '\n';
+//            file << entry.KY_THUAT_SO << '\n';
+//            file << entry.OTHER_CODE << '\n';
+//            file << entry.SELF_DEV << '\n';
+//            file << entry.NOTE << '\n';
+//        }
+//        file.close();
+//     //   cout << filename << " saved successfully!" << endl;
+//    } else {
+//    	SetConsoleTextAttribute(hConsole, 12);
+//        cerr << "Khong the mo file luu du lieu .<CodeLine-220>" << endl;
+//        SetConsoleTextAttribute(hConsole, 7);
+//    }
+//}
 
 void PrintInvalidDateInputError ( string CheckDate ) {
 	SetConsoleTextAttribute(hConsole, 12);
@@ -464,71 +508,71 @@ void PrintInvalidDateInputError ( string CheckDate ) {
 	return;
 }
 
-
-// Function to show entries based on user input
-void ShowEntries (const vector<DailyReport>& reports) {
-    if (reports.empty()) {
-        cout << "No data available to show." << endl;
-        return;
-    }
-
-    cout << "Nhap 'all' de show tat ca hoac nhap ngay de show du lieu cua ngay do: ";
-  
-    string CheckDate;
-    cin >> CheckDate;
-    StandardizeInput(CheckDate);
-    
-    if ( CheckDate != "all" && !ValidDateInputForShow(CheckDate)) {
-    	PrintInvalidDateInputError(CheckDate);
-    	return;
-	}
-	
-	string input = CheckDate;
-	
-    if (input == "all") {
-        
-		for (const auto& entry : reports) {
-			cout << endl;
-			SetConsoleTextAttribute(hConsole, 142);
-            cout << "date           : " << entry.DATE;
-            SetConsoleTextAttribute(hConsole, 7); cout << endl;
-       		cout << "App dev        : "; DisplayData(entry.APP_DEV);
-   			cout << "Code           : "; DisplayData(entry.CODE);
-    		cout << "Giai tich 2    : "; DisplayData(entry.GIAI_TICH2);
-    		cout << "Kinh te chinh  : "; DisplayData(entry.KINH_TE_CHINH_TRI);
-    		cout << "Ky thuat so    : "; DisplayData(entry.KY_THUAT_SO);
-    		cout << "Other code     : "; DisplayData(entry.OTHER_CODE);
-    		cout << "Self dev       : "; DisplayData(entry.SELF_DEV);
-    		cout << "Note           : "; DisplayData(entry.NOTE);
-            cout << "-------------------\n";
-        //    motivation;
-        }
-    } else {
-        bool found = false;
-        for (const auto& entry : reports) {
-            if (entry.DATE == input) {
-
-                cout << "date           : " << entry.DATE << endl;
-                cout << "App dev        : " << entry.APP_DEV << endl;
-                cout << "Code           : " << entry.CODE << endl;
-                cout << "Giai tich 2    : " << entry.GIAI_TICH2 << endl;
-                cout << "Kinh te chinh  : " << entry.KINH_TE_CHINH_TRI << endl;
-                cout << "Ky thuat so    : " << entry.KY_THUAT_SO << endl;
-                cout << "Other code     : " << entry.OTHER_CODE << endl;
-                cout << "Self dev       : " << entry.SELF_DEV << endl;
-                cout << "Note           : " << entry.NOTE << endl;
-                cout << "-------------------\n";
-                found = true;
-            //    motivation;
-            }
-        }
-        if (!found) {
-        	SetConsoleTextAttribute(hConsole, 12);
-            cout << "No data found for the specified date " << input << endl;
-            SetConsoleTextAttribute(hConsole, 7);
-        }
-    }
-}
+//
+//// Function to show entries based on user input
+//void ShowEntries (const vector<SubName>& reports) {
+//    if (reports.empty()) {
+//        cout << "No data available to show." << endl;
+//        return;
+//    }
+//
+//    cout << "Nhap 'all' de show tat ca hoac nhap ngay de show du lieu cua ngay do: ";
+//  
+//    string CheckDate;
+//    cin >> CheckDate;
+//    StandardizeInput(CheckDate);
+//    
+//    if ( CheckDate != "all" && !ValidDateInputForShow(CheckDate)) {
+//    	PrintInvalidDateInputError(CheckDate);
+//    	return;
+//	}
+//	
+//	string input = CheckDate;
+//	
+//    if (input == "all") {
+//        
+//		for (const auto& entry : reports) {
+//			cout << endl;
+//			SetConsoleTextAttribute(hConsole, 142);
+//            cout << "date           : " << entry.DATE;
+//            SetConsoleTextAttribute(hConsole, 7); cout << endl;
+//       		cout << "App dev        : "; DisplayData(entry.APP_DEV);
+//   			cout << "Code           : "; DisplayData(entry.CODE);
+//    		cout << "Giai tich 2    : "; DisplayData(entry.GIAI_TICH2);
+//    		cout << "Kinh te chinh  : "; DisplayData(entry.KINH_TE_CHINH_TRI);
+//    		cout << "Ky thuat so    : "; DisplayData(entry.KY_THUAT_SO);
+//    		cout << "Other code     : "; DisplayData(entry.OTHER_CODE);
+//    		cout << "Self dev       : "; DisplayData(entry.SELF_DEV);
+//    		cout << "Note           : "; DisplayData(entry.NOTE);
+//            cout << "-------------------\n";
+//        //    motivation;
+//        }
+//    } else {
+//        bool found = false;
+//        for (const auto& entry : reports) {
+//            if (entry.DATE == input) {
+//
+//                cout << "date           : " << entry.DATE << endl;
+//                cout << "App dev        : " << entry.APP_DEV << endl;
+//                cout << "Code           : " << entry.CODE << endl;
+//                cout << "Giai tich 2    : " << entry.GIAI_TICH2 << endl;
+//                cout << "Kinh te chinh  : " << entry.KINH_TE_CHINH_TRI << endl;
+//                cout << "Ky thuat so    : " << entry.KY_THUAT_SO << endl;
+//                cout << "Other code     : " << entry.OTHER_CODE << endl;
+//                cout << "Self dev       : " << entry.SELF_DEV << endl;
+//                cout << "Note           : " << entry.NOTE << endl;
+//                cout << "-------------------\n";
+//                found = true;
+//            //    motivation;
+//            }
+//        }
+//        if (!found) {
+//        	SetConsoleTextAttribute(hConsole, 12);
+//            cout << "No data found for the specified date " << input << endl;
+//            SetConsoleTextAttribute(hConsole, 7);
+//        }
+//    }
+//}
 
 void StandardizeInput (string& input) {
 	int index = 0;
@@ -721,11 +765,11 @@ int ValidDateInputForShow (string date) {
 
 int main() {
     
-	
-	vector<DailyReport> reports;
+
+	vector<SubName> reports;
     string filename = "BaoCao_HocTap.txt";
     
-    LoadData(reports, filename);
+//    LoadData(reports, filename);
 	
 	int running = 1;
     while (running <= 100) {
@@ -740,13 +784,13 @@ int main() {
 		else if (command == "close")                    return 0;
 		else if (command == "clear")                    ClearScreen(filename);
 		else if (command == "delete")        			DeleteEntry(reports);
-		else if (command == "edit") 					EditEntry(reports);
-		else if (command == "show") 					ShowEntries(reports);
+//		else if (command == "edit") 					EditEntry(reports);
+//		else if (command == "show") 					ShowEntries(reports);
 		else if (command == "thangnaolamracainay?") 	ThangNaoLamRaCaiNay();
 		else if (command == "help") 					DisplayHelp();
 		else 											DisplayInvalidCommandError();
 		
-		SaveData(reports, filename);
+//		SaveData(reports, filename);
    		
         
 		running++;
