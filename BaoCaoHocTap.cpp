@@ -8,7 +8,7 @@
 
 
 #define CurrentYear 2024
-#define version "1.2.5"
+#define version "1.3.0"
 #define endl "\n"
 #define motivation cout << "\n\n \t-It's during our darkest moments that we must focus to see the light- \n\t\t\t\t\t\t\t\t-Aristotle Onassis-" << endl;
 #define StopCode 10101
