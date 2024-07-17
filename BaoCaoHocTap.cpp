@@ -428,20 +428,6 @@ void DeleteEntry (vector<SubName>& reports) {
     SetConsoleTextAttribute(hConsole, 7);
 }
 
-//void DisplayData (string data) {
-//	string TempData = data;
-//	StandardizeInput(TempData);
-//	if (data.empty() || TempData == "nope" || TempData == "no" ) {
-//		SetConsoleTextAttribute(hConsole, 192);
-//		cout << "nope";
-//		SetConsoleTextAttribute(hConsole, 7);
-//		cout << endl;
-//	} else {
-//		cout << data << endl;
-//	}
-//	
-//	return;
-//}
 
 void DisplayHelp () {
 	SetConsoleTextAttribute(hConsole, 15);
@@ -469,64 +455,140 @@ void DisplayInvalidCommandError () {
 	return;
 }
 
+int isNumber ( string s ) {
+	int index = 0;
+	int result = 0;
+	while ( s[index] != '\0' && s[index] != '\n' && s[index] != EOF ) {
+		if ( !isdigit(s[index]) ) return -1;
+		result = result*10 + (s[index]-48);
+		index++;
+	}
+	
+	return result;
+}
+
+const int rangeWidth = 50;  // Adjust the width as needed
+const int littleWidth = 5;
+
+string rangeOfSatisfy(int rate) {
+	
+	if ( rate < 0 ) return "Error - rate < 0";
+	if ( rate > 100 ) rate = 100;
+    // Calculate the number of '#' characters
+    int numHashes = rangeWidth * rate / 100;
+    // Calculate the number of spaces
+    int numSpaces = rangeWidth - numHashes;
+
+    // Construct the result string
+    string result = to_string(rate);
+    result.append("%");
+    result.append(littleWidth - result.length(), ' ');
+    result.append("[");
+    result.append(numHashes, '#');
+    result.append(numSpaces, ' ');
+    result.append("]");
+
+    // Append the constructed string to data
+    return result;
+}
 
 void displayData ( SubName name, SubName data ) {
 	
-	if ( name.s1.empty() ) {
-   	 	return;
-	}
+	if (name.s1.empty()) return;
+int checkNum = isNumber(data.s1);
+if ( checkNum == -1 ) {
+    cout << FillDotAfter(name.s1) << " : " << data.s1 << endl;
+} 
+else {
+    cout << FillDotAfter(name.s1) << " " << rangeOfSatisfy(checkNum) << endl;
+} 
+
+if (name.s2.empty()) return;
+checkNum = isNumber(data.s2);
+if ( checkNum == -1 ) {
+    cout << FillDotAfter(name.s2) << " : " << data.s2 << endl;
+} 
+else {
+    cout << FillDotAfter(name.s2) << " " << rangeOfSatisfy(checkNum) << endl;
+} 
+
+if (name.s3.empty()) return;
+checkNum = isNumber(data.s3);
+if ( checkNum == -1 ) {
+    cout << FillDotAfter(name.s3) << " : " << data.s3 << endl;
+} 
+else {
+    cout << FillDotAfter(name.s3) << " " << rangeOfSatisfy(checkNum) << endl;
+} 
+
+if (name.s4.empty()) return;
+checkNum = isNumber(data.s4);
+if ( checkNum == -1 ) {
+    cout << FillDotAfter(name.s4) << " : " << data.s4 << endl;
+} 
+else {
+    cout << FillDotAfter(name.s4) << " " << rangeOfSatisfy(checkNum) << endl;
+} 
+
+if (name.s5.empty()) return;
+checkNum = isNumber(data.s5);
+if ( checkNum == -1 ) {
+    cout << FillDotAfter(name.s5) << " : " << data.s5 << endl;
+} 
+else {
+    cout << FillDotAfter(name.s5) << " " << rangeOfSatisfy(checkNum) << endl;
+} 
+
+if (name.s6.empty()) return;
+checkNum = isNumber(data.s6);
+if ( checkNum == -1 ) {
+    cout << FillDotAfter(name.s6) << " : " << data.s6 << endl;
+} 
+else {
+    cout << FillDotAfter(name.s6) << " " << rangeOfSatisfy(checkNum) << endl;
+} 
+
+if (name.s7.empty()) return;
+checkNum = isNumber(data.s7);
+if ( checkNum == -1 ) {
+    cout << FillDotAfter(name.s7) << " : " << data.s7 << endl;
+} 
+else {
+    cout << FillDotAfter(name.s7) << " " << rangeOfSatisfy(checkNum) << endl;
+} 
+
+if (name.s8.empty()) return;
+checkNum = isNumber(data.s8);
+if ( checkNum == -1 ) {
+    cout << FillDotAfter(name.s8) << " : " << data.s8 << endl;
+} 
+else {
+    cout << FillDotAfter(name.s8) << " " << rangeOfSatisfy(checkNum) << endl;
+} 
+
+if (name.s9.empty()) return;
+checkNum = isNumber(data.s9);
+if ( checkNum == -1 ) {
+    cout << FillDotAfter(name.s9) << " : " << data.s9 << endl;
+} 
+else {
+    cout << FillDotAfter(name.s9) << " " << rangeOfSatisfy(checkNum) << endl;
+} 
+
+if (name.s10.empty()) return;
+checkNum = isNumber(data.s10);
+if ( checkNum == -1 ) {
+    cout << FillDotAfter(name.s10) << " : " << data.s10 << endl;
+} 
+else {
+    cout << FillDotAfter(name.s10) << " " << rangeOfSatisfy(checkNum) << endl;
+}
+
 	
-	cout << FillDotAfter(name.s1) << " : " << data.s1 << endl;
-
-	if ( name.s2.empty() ) {
-    	return;
-	}
-	cout << FillDotAfter(name.s2) << " : " << data.s2 << endl;
-
-	if ( name.s3.empty() ) {
-	    return;
-	}
-	cout << FillDotAfter(name.s3) << " : " << data.s3 << endl;
-
-	if ( name.s4.empty() ) {
-   	 	return;
-	}	
-	cout << FillDotAfter(name.s4) << " : " << data.s4 << endl;
-
-	if ( name.s5.empty() ) {	
-    	return;
-	}
- 	cout << FillDotAfter(name.s5) << " : " << data.s5 << endl;
-
-	if ( name.s6.empty() ) {
-    	return;
-	}
-	cout << FillDotAfter(name.s6) << " : " << data.s6 << endl;
-
-	if ( name.s7.empty() ) {
-    	return;
-	}
-	cout << FillDotAfter(name.s7) << " : " << data.s7 << endl;
-
-	if ( name.s8.empty() ) {
-   	 return;
-	}
-	cout << FillDotAfter(name.s8) << " : " << data.s8 << endl;
-
-	if ( name.s9.empty() ) {
-    	return;
-	}
-	cout << FillDotAfter(name.s9) << " : " << data.s9 << endl;
-
-	if ( name.s10.empty() ) {
-   	 	return;
-	}
-	cout << FillDotAfter(name.s10) << " : " << data.s10 << endl;
 	
 	return;
 	 
 }
-
 
 void EditEntry (vector<SubName>& reports) {
     string editDate;
@@ -660,7 +722,6 @@ bool IsLeapYear(int year) {
 // Function to load data from a file
 void LoadData (vector<SubName>& reports, const string& filename) {
     ifstream file(filename);
-    SetConsoleTextAttribute(hConsole, 10);
     if (file.is_open()) {
         
 		
@@ -681,6 +742,9 @@ void LoadData (vector<SubName>& reports, const string& filename) {
             reports.push_back(entry); 
         }
         file.close();
+        SetConsoleTextAttribute(hConsole, 15);
+        cout << "BaoCao_HocTap [ version " << version << " ]" << endl;
+        SetConsoleTextAttribute(hConsole, 10);
         cout << "Du lieu duoc lay tu " << filename << endl;
         SetConsoleTextAttribute(hConsole, 14);
         motivation;
