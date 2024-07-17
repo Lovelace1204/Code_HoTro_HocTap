@@ -18,7 +18,7 @@
 +	- Add 'close' command to close the app
 +
 + 26/5/2024 : Update ver 1.2.2
-+	- Add check empty out put feature - Fix some bugs
++	- Add check empty output feature - Fix some bugs
 +
 + 28/5/2024 : Update ver 1.2.3
 +	- Add colorful heart :,>
@@ -31,7 +31,7 @@
 +	- Add "AddDotAfter" function for better appearance :) ( also for automated align ) 
 +
 + 17/7/2024 : BIG update ver 1.3.0
-+		- Reconstruct code architecture
-+		- Added features to customize subjects and tasks over time
-+		- Subjects and tasks can now added easily by create just a struct in the source code
-+		- Data flows now are easier to manage, process to display
++	- Reconstruct code architecture
++	- Added features to customize subjects and tasks over time
++	- Subjects and tasks can now added easily by creating just a struct in the source code
++	- Data flows now are easier to manage, process for display
