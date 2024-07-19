@@ -768,7 +768,7 @@ void LoadData (vector<SubName>& reports, const string& file_abs_path ) {
 		cerr << "Ban hay chon mot dia chi co dinh de luu file du lieu!" << endl;
         cerr << "Vd : filePath = " << filePath << endl;
         cerr << "Neu ban muon luu du lieu tai 1 noi khac" << endl;
-		cerr << "Ban hay sua lai 'filePath & file_abs_path' tai '#define' trong source code" << endl;
+		cerr << "Ban hay sua lai 'filePath & file_abs_path' tai '#define & const string' trong source code" << endl;
     }
     SetConsoleTextAttribute(hConsole, 7);
 }
