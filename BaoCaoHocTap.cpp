@@ -16,14 +16,14 @@ using namespace std;
 #define StopCode 10101
 // stop code is printout in case the program gives exceed ouput or any malfuntion, please check the main function and CheckRuntimeError() 
 
-#define PassWord "12042005" // Confidential
+#define PassWord "12042005" // Confidential :)
 
 #define filePath "C:\\Users\\os\\Desktop\\Code_HoTro_HocTap"
 // You should change the file path directly to where you wanna permanently store your data
 
 #define fileName "BaoCao_HocTap_Data.txt"
 
-//#define file_abs_path "C:\\Users\\os\\Desktop\\Code_HoTro_HocTap\\BaoCao_HocTap_Data.txt"
+const string file_abs_path = "C:\\Users\\os\\Desktop\\Code_HoTro_HocTap\\BaoCao_HocTap_Data.txt";
 
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 // color text handle 
@@ -1046,7 +1046,6 @@ int main() {
     
 
 	vector<SubName> reports;
-	string file_abs_path = "C:\\Users\\os\\Desktop\\Code_HoTro_HocTap\\BaoCao_HocTap_Data.txt";
     LoadData(reports, file_abs_path);
 	
 	int running = 1;
