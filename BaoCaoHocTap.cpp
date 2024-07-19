@@ -6,20 +6,29 @@
 #include <cmath>
 #include <windows.h>
 
+using namespace std;
 
 #define CurrentYear 2024
-#define version "1.3.0"
+#define version "1.3.1"
 #define endl "\n"
 #define motivation cout << "\n\n \t-It's during our darkest moments that we must focus to see the light- \n\t\t\t\t\t\t\t\t-Aristotle Onassis-" << endl;
+
 #define StopCode 10101
 // stop code is printout in case the program gives exceed ouput or any malfuntion, please check the main function and CheckRuntimeError() 
+
 #define PassWord "12042005" // Confidential
 
+#define filePath "C:\\Users\\os\\Desktop\\Code_HoTro_HocTap"
+// You should change the file path directly to where you wanna permanently store your data
+
+#define fileName "BaoCao_HocTap_Data.txt"
+
+//#define file_abs_path "C:\\Users\\os\\Desktop\\Code_HoTro_HocTap\\BaoCao_HocTap_Data.txt"
 
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 // color text handle 
 // SetConsoleTextAttribute(hConsole, 12) <key>
-using namespace std;
+
 
 //
 //                       _oo0oo_
@@ -91,7 +100,7 @@ void PrintInvalidDateInputError (string CheckDate);
 // Feature funtions
 void AddEntry(vector<SubName>& reports);
 
-void ClearScreen (string filename);
+void ClearScreen ();
 
 void DeleteEntry(vector<SubName>& reports, const string& input);
 void DisplayData (string data);
@@ -101,20 +110,13 @@ void EditEntry(vector<SubName>& reports);
 
 string FillDotAfter (const string& label);
 
-void SaveData(const vector<SubName>& reports, const string& filename);
+void SaveData(const vector<SubName>& reports);
 void ShowEntries(const vector<SubName>& reports);
 void StandardizeInput (string& input);
 
 
 int ValidDateInput (string date);
 int ValidDateInputForShow (string date);
-
-//SubName specify ( SubName test ) {
-//	test.s1 = "1";
-//	test.s2 = "2";
-//	
-//	return test;
-//}
 
 SubName specify ( SubName sub ) {
 	
@@ -325,10 +327,11 @@ void CheckRuntimeError (int& running) {
 		}
 }
 
-void ClearScreen (string filename) {
+void ClearScreen () {
 	system("cls");
 	SetConsoleTextAttribute(hConsole, 10);
-    cout << "Du lieu duoc lay tu " << filename << endl;
+    cout << "Du lieu duoc lay tu " << fileName << endl;
+    cout << "Dia chi : " << filePath << endl;
     SetConsoleTextAttribute(hConsole, 7);
     return;
 }
@@ -467,10 +470,12 @@ int isNumber ( string s ) {
 	return result;
 }
 
-const int rangeWidth = 50;  // Adjust the width as needed
-const int littleWidth = 5;
+
 
 string rangeOfSatisfy(int rate) {
+	
+	const int rangeWidth = 50;  // Adjust the width as needed
+	const int littleWidth = 5;
 	
 	if ( rate < 0 ) return "Error - rate < 0";
 	if ( rate > 100 ) rate = 100;
@@ -704,10 +709,13 @@ void EditEntry (vector<SubName>& reports) {
     SetConsoleTextAttribute(hConsole, 7);
 }
 
-const int LABEL_WIDTH = 50;  // Adjust the width as needed
+
 
 string FillDotAfter (const string& label) {
-    string result = label;
+    
+	const int LABEL_WIDTH = 50;  // Adjust the width as needed
+	
+	string result = label;
     int DotCount = LABEL_WIDTH - label.length() - 1; // Subtract 1 for the colon
     result.append(DotCount, '.');
 //    result.append(": ");
@@ -720,8 +728,9 @@ bool IsLeapYear(int year) {
 }
 
 // Function to load data from a file
-void LoadData (vector<SubName>& reports, const string& filename) {
-    ifstream file(filename);
+void LoadData (vector<SubName>& reports, const string& file_abs_path ) {
+	
+	ifstream file(file_abs_path);
     if (file.is_open()) {
         
 		
@@ -745,19 +754,26 @@ void LoadData (vector<SubName>& reports, const string& filename) {
         SetConsoleTextAttribute(hConsole, 15);
         cout << "BaoCao_HocTap [ version " << version << " ]" << endl;
         SetConsoleTextAttribute(hConsole, 10);
-        cout << "Du lieu duoc lay tu " << filename << endl;
+        cout << "Du lieu duoc lay tu " << fileName << endl;
+        cout << "Dia chi : " << filePath << endl;
         SetConsoleTextAttribute(hConsole, 14);
         motivation;
     } else {
     	SetConsoleTextAttribute(hConsole, 12);
-        cerr << "Khong the mo file de load data. <create-mode>BaoCao_HocTap.text" << endl;
+        cerr << "Khong the mo file de load data." << endl;
+        SetConsoleTextAttribute(hConsole, 10);
+        cerr << "luu y, 'BaoCao_HocTap_Data.txt' can duoc tao thu cong" << endl;
+		cerr << "Ban hay chon mot dia chi co dinh de luu file du lieu!" << endl;
+        cerr << "Vd : filePath = " << filePath << endl;
+        cerr << "Neu ban muon luu du lieu tai 1 noi khac" << endl;
+		cerr << "Ban hay sua lai 'filePath & file_abs_path' tai '#define' trong source code" << endl;
     }
     SetConsoleTextAttribute(hConsole, 7);
 }
 
 // Function to save data to a file
-void SaveData (const vector<SubName>& reports, const string& filename) {
-    ofstream file(filename);
+void SaveData (const vector<SubName>& reports, const string& file_abs_path) {
+    ofstream file(file_abs_path);
 
     if (file.is_open()) {
         for (const auto& entry : reports) {
@@ -906,7 +922,6 @@ int ValidDateInput (string date) {
 				while ( date[TempIndex] != '\0' && date[TempIndex] != '/' && date[TempIndex] != '-' && date[TempIndex] != EOF) {
 					
 					if ( date[TempIndex] < '0' || date[TempIndex] > '9' ) {
-//						cout << "\n%%Die0" << endl;
 						return 0;
 					}
 					
@@ -917,26 +932,22 @@ int ValidDateInput (string date) {
 			if (i == 0 && (IntDate[0] < 0 || IntDate[0] > 31)) {
 				cout << "Day " << IntDate[0] << " exist ? bro u serious?:)" << endl;
 				SetConsoleTextAttribute(hConsole, 7);
-//				cout << "\n%%Die1" << endl;
 				return 0;
 			}
 			else if (i == 1 && (IntDate[1] < 0 || IntDate[1] > 12)) {
 				cout << "Month " << IntDate[1] << " exist ? bro u serious?:)" << endl;
 				SetConsoleTextAttribute(hConsole, 7);
-//				cout << "\n%%Die2" << endl;
 				return 0;
 			} else if ( i == 2 && IntDate[2] != CurrentYear ) {
 				cout << "Bro living in " << IntDate[2] << " =))?? R you serious" << endl;
 				cout << "The lastest valid year for this update is " << CurrentYear << " | Ver : " << version << endl;
 			}
 			else if ( IntDate[i] == 0) {
-//				cout << "\n%%Die4" << endl;
 				return 0;
 			}
 			else TempIndex++;
 			
 			if ( i == 2 && date[TempIndex-1] != '\0') {
-//				cout << "\n%%Die5" << " " << i << date[TempIndex] << endl;
 				return 0;
 			}
 
@@ -949,19 +960,16 @@ int ValidDateInput (string date) {
 		if ( (IntDate[1] == 4 || IntDate[1] == 6 || IntDate[1] == 9 || IntDate[1] == 11) && IntDate[0] > 30) {
 			cout << "The " << IntDate[1] << " month does'nt have 31 days bro =))" << endl;
 			SetConsoleTextAttribute(hConsole, 7);
-//			cout << "\n%%Die6" << endl;
 			return 0;
 		} 
 		else if ( !IsLeapYear(IntDate[2]) && IntDate[1] == 2 && IntDate[0] > 28 ) {
 			cout << "The " << IntDate[2] << " is not a leap year so february can only have 28 days bro" << endl;
 			SetConsoleTextAttribute(hConsole, 7);
-//			cout << "\n%%Die7" << endl;
 			return 0; 
 		} 
 		else if ( IsLeapYear(IntDate[2]) && IntDate[1] == 2 && IntDate[0] > 29 ) {
 			cout << "The " << IntDate[2] << " is a leap year, but february it only can have 29 but not " << IntDate[0] << " bro, double-check on that." << endl;
 			SetConsoleTextAttribute(hConsole, 7);
-//			cout << "\n%%Die8" << endl;
 			return 0;
 		}
 		else {
@@ -982,7 +990,6 @@ int ValidDateInputForShow (string date) {
 				while ( date[TempIndex] != '\0' && date[TempIndex] != '/' && date[TempIndex] != '-' && date[TempIndex] != EOF) {
 					
 					if ( date[TempIndex] < '0' || date[TempIndex] > '9' ) {
-//						cout << "\n%%Die0" << endl;
 						return 0;
 					}
 					
@@ -993,23 +1000,19 @@ int ValidDateInputForShow (string date) {
 			if (i == 0 && (IntDate[0] < 0 || IntDate[0] > 31)) {
 				cout << "Day " << IntDate[0] << " exist ? bro u serious?:)" << endl;
 				SetConsoleTextAttribute(hConsole, 7);
-//				cout << "\n%%Die1" << endl;
 				return 0;
 			}
 			else if (i == 1 && (IntDate[1] < 0 || IntDate[1] > 12)) {
 				cout << "Month " << IntDate[1] << " exist ? bro u serious?:)" << endl;
 				SetConsoleTextAttribute(hConsole, 7);
-//				cout << "\n%%Die2" << endl;
 				return 0;
 			}
 			else if ( IntDate[i] == 0) {
-//				cout << "\n%%Die4" << endl;
 				return 0;
 			}
 			else TempIndex++;
 			
 			if ( i == 2 && date[TempIndex-1] != '\0') {
-//				cout << "\n%%Die5" << " " << i << date[TempIndex] << endl;
 				return 0;
 			}
 
@@ -1020,19 +1023,16 @@ int ValidDateInputForShow (string date) {
 		if ( (IntDate[1] == 4 || IntDate[1] == 6 || IntDate[1] == 9 || IntDate[1] == 11) && IntDate[0] > 30) {
 			cout << "The " << IntDate[1] << " month does'nt have 31 days bro =))" << endl;
 			SetConsoleTextAttribute(hConsole, 7);
-//			cout << "\n%%Die6" << endl;
 			return 0;
 		} 
 		else if ( !IsLeapYear(IntDate[2]) && IntDate[1] == 2 && IntDate[0] > 28 ) {
 			cout << "The " << IntDate[2] << " is not a leap year so february can only have 28 days bro" << endl;
 			SetConsoleTextAttribute(hConsole, 7);
-//			cout << "\n%%Die7" << endl;
 			return 0; 
 		} 
 		else if ( IsLeapYear(IntDate[2]) && IntDate[1] == 2 && IntDate[0] > 29 ) {
 			cout << "The " << IntDate[2] << " is a leap year, but february it only can have 29 but not " << IntDate[0] << " bro, double-check on that." << endl;
 			SetConsoleTextAttribute(hConsole, 7);
-//			cout << "\n%%Die8" << endl;
 			return 0;
 		}
 		else {
@@ -1046,9 +1046,8 @@ int main() {
     
 
 	vector<SubName> reports;
-    string filename = "BaoCao_HocTap.txt";
-    
-    LoadData(reports, filename);
+	string file_abs_path = "C:\\Users\\os\\Desktop\\Code_HoTro_HocTap\\BaoCao_HocTap_Data.txt";
+    LoadData(reports, file_abs_path);
 	
 	int running = 1;
     while (running <= 100) {
@@ -1061,7 +1060,7 @@ int main() {
         
 		if      (command == "add")                      AddEntry(reports);
 		else if (command == "close")                    return 0;
-		else if (command == "clear")                    ClearScreen(filename);
+		else if (command == "clear")                    ClearScreen();
 		else if (command == "delete")        			DeleteEntry(reports);
 		else if (command == "edit") 					EditEntry(reports);
 		else if (command == "show") 					showData(reports);
@@ -1069,7 +1068,7 @@ int main() {
 		else if (command == "help") 					DisplayHelp();
 		else 											DisplayInvalidCommandError();
 		
-		SaveData(reports, filename);
+		SaveData(reports, file_abs_path);
    		
         
 		running++;

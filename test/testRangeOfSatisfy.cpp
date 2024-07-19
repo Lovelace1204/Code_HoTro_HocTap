@@ -14,13 +14,15 @@ HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
 const int rangeWidth = 50;  // Adjust the width as needed
 
-string rangeOfSatisfy ( int rate, string& data ) {
-	float calrate = rate;
-	string result = data;
-	int rangeCount = rangeWidth - rangeWidth/100*rate - 1;
-	result.append(rangeCount, ' ');
-	return result;
-}
+//string rangeOfSatisfy ( int rate, string& data ) {
+//	float calrate = rate;
+//	string result = data;
+//	int rangeCount = rangeWidth - rangeWidth/100*rate - 1;
+//	result.append(rangeCount, ' ');
+//	return result;
+//}
+
+
 
 //string FillDotAfter (const string& label) {
 //    string result = label;
