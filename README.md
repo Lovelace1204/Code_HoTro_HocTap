@@ -60,3 +60,7 @@ The data structure is organized by subjects or tasks written in the source code 
 +	- Added features to customize subjects and tasks over time
 +	- Subjects and tasks can now added easily by creating just a struct in the source code
 +	- Data flows now are easier to manage, process for display
++ 20/7/2024 : minor update 1.3.1
++ - BaoCao_HocTap_Data.txt now has a fixed folder path, needs to be created manually to store data
++ - filePath is defined in the source code ( you can change it to store data everywhere you want in your PC, which means you can change system path to open it from cmd 'cause data you have a fixed path )
++  
