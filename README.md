@@ -1,3 +1,28 @@
+:star2: __Introducing BaoCao_HocTap__
+
+:sun_with_face: BaoCao_HocTap is a C++ application that I started developing during my freshman year of college. The initial goal behind this project was to create a tool that helps me document my daily learning experiences, thereby improving time and task management. Over time, the app has undergone numerous enhancements and restructurings.
+
+:ringed_planet: The latest big update, version 1.3.0, introduces a new feature where data is now stored as satisfaction ratings instead of just text strings. You can also use string to take note if you need to, the percentage is only represented when the string is all digits. 
+
+
+![image](https://github.com/user-attachments/assets/0ee5e87f-7ba3-4f5b-9fa1-76613bc07c27)
+
+
+The application’s interface is designed to be user-friendly; you can type the command “help” to view available commands such as “add” for adding new entries, “edit” for modifying records, “delete” for removing data, and “show” for displaying saved information. 
+
+
+![image](https://github.com/user-attachments/assets/7297b480-f9dc-484f-9063-bba3a016e315)
+
+The data structure is organized by subjects or tasks written in the source code using struct for better organization and manipulation.
+
+
+![image](https://github.com/user-attachments/assets/a0cfa906-3784-4ec2-b94e-fcfa2cf4cda5)
+
+:sun_behind_large_cloud: Additionally, the app includes useful features like “clear” to clean the screen and a fun command “thangnaolamracainay?” that I highly recommend trying out =))
+
+:smiling_face_with_three_hearts: __Feel free to explore and enjoy the app!__
+
+
 (*) Version 1.0.0 first build < console user-interface > < text-type data >
 
 + 22/5/2024 : update Version 1.0.1 & 1.0.2
