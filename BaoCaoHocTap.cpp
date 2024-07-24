@@ -183,6 +183,17 @@ void displayPlanTimeErr () {
 	SetConsoleTextAttribute(hConsole, 7);
 }
 
+//int subAddEntry ( string name, string& newEntryVal, SubName newEntry, SubName reports) {
+//	if ( name.empty() ) {
+//		displayPlanTimeErr();
+//  	 	reports.push_back(newEntry);
+//   		return 0;
+//	}
+//	cout << FillDotAfter(name) << " : ";
+//	getline(cin, newEntryVal);
+//	return 1;
+//}
+
 // Function to add a new entry to the data
 void AddEntry(vector<SubName>& reports) {
     SubName newEntry;
@@ -207,14 +218,26 @@ void AddEntry(vector<SubName>& reports) {
 	
 	SubName name = specify(newEntry);
 	
+	
+//	if ( !subAddEntry(name.s1, newEntry.s1, newEntry, reports )) return;
+//	if ( !subAddEntry(name.s2, newEntry.s2, newEntry, reports )) return;
+//	if ( !subAddEntry(name.s3, newEntry.s3, newEntry, reports )) return;
+//	if ( !subAddEntry(name.s4, newEntry.s4, newEntry, reports )) return;
+//	if ( !subAddEntry(name.s5, newEntry.s5, newEntry, reports )) return;
+//	if ( !subAddEntry(name.s6, newEntry.s6, newEntry, reports )) return;
+//	if ( !subAddEntry(name.s7, newEntry.s7, newEntry, reports )) return;
+//	if ( !subAddEntry(name.s8, newEntry.s8, newEntry, reports )) return;
+//	if ( !subAddEntry(name.s9, newEntry.s9, newEntry, reports )) return;
+//	if ( !subAddEntry(name.s10, newEntry.s10, newEntry, reports )) return;
+
+
 	if ( name.s1.empty() ) {
-		displayPlanTimeErr();
-  	 	reports.push_back(newEntry);
-   		return;
+    	reports.push_back(newEntry);
+    	displayInputIntake();
+   	 	return;
 	}
 	cout << FillDotAfter(name.s1) << " : ";
 	getline(cin, newEntry.s1);
-
 	if ( name.s2.empty() ) {
     	reports.push_back(newEntry);
     	displayInputIntake();
@@ -479,8 +502,8 @@ string rangeOfSatisfy(int rate) {
 	const int rangeWidth = 50;  // Adjust the width as needed
 	const int littleWidth = 5;
 	
-	if ( rate < 0 ) return "Error - rate < 0";
-	if ( rate > 100 ) rate = 100;
+	if ( rate < 0 ) 	rate = 0;
+	if ( rate > 100 ) 	rate = 100;
     // Calculate the number of '#' characters
     int numHashes = rangeWidth * rate / 100;
     // Calculate the number of spaces
@@ -499,99 +522,30 @@ string rangeOfSatisfy(int rate) {
     return result;
 }
 
-void displayData ( SubName name, SubName data ) {
-	
-	if (name.s1.empty()) return;
-int checkNum = isNumber(data.s1);
-if ( checkNum == -1 ) {
-    cout << FillDotAfter(name.s1) << " : " << data.s1 << endl;
-} 
-else {
-    cout << FillDotAfter(name.s1) << " " << rangeOfSatisfy(checkNum) << endl;
-} 
-
-if (name.s2.empty()) return;
-checkNum = isNumber(data.s2);
-if ( checkNum == -1 ) {
-    cout << FillDotAfter(name.s2) << " : " << data.s2 << endl;
-} 
-else {
-    cout << FillDotAfter(name.s2) << " " << rangeOfSatisfy(checkNum) << endl;
-} 
-
-if (name.s3.empty()) return;
-checkNum = isNumber(data.s3);
-if ( checkNum == -1 ) {
-    cout << FillDotAfter(name.s3) << " : " << data.s3 << endl;
-} 
-else {
-    cout << FillDotAfter(name.s3) << " " << rangeOfSatisfy(checkNum) << endl;
-} 
-
-if (name.s4.empty()) return;
-checkNum = isNumber(data.s4);
-if ( checkNum == -1 ) {
-    cout << FillDotAfter(name.s4) << " : " << data.s4 << endl;
-} 
-else {
-    cout << FillDotAfter(name.s4) << " " << rangeOfSatisfy(checkNum) << endl;
-} 
-
-if (name.s5.empty()) return;
-checkNum = isNumber(data.s5);
-if ( checkNum == -1 ) {
-    cout << FillDotAfter(name.s5) << " : " << data.s5 << endl;
-} 
-else {
-    cout << FillDotAfter(name.s5) << " " << rangeOfSatisfy(checkNum) << endl;
-} 
-
-if (name.s6.empty()) return;
-checkNum = isNumber(data.s6);
-if ( checkNum == -1 ) {
-    cout << FillDotAfter(name.s6) << " : " << data.s6 << endl;
-} 
-else {
-    cout << FillDotAfter(name.s6) << " " << rangeOfSatisfy(checkNum) << endl;
-} 
-
-if (name.s7.empty()) return;
-checkNum = isNumber(data.s7);
-if ( checkNum == -1 ) {
-    cout << FillDotAfter(name.s7) << " : " << data.s7 << endl;
-} 
-else {
-    cout << FillDotAfter(name.s7) << " " << rangeOfSatisfy(checkNum) << endl;
-} 
-
-if (name.s8.empty()) return;
-checkNum = isNumber(data.s8);
-if ( checkNum == -1 ) {
-    cout << FillDotAfter(name.s8) << " : " << data.s8 << endl;
-} 
-else {
-    cout << FillDotAfter(name.s8) << " " << rangeOfSatisfy(checkNum) << endl;
-} 
-
-if (name.s9.empty()) return;
-checkNum = isNumber(data.s9);
-if ( checkNum == -1 ) {
-    cout << FillDotAfter(name.s9) << " : " << data.s9 << endl;
-} 
-else {
-    cout << FillDotAfter(name.s9) << " " << rangeOfSatisfy(checkNum) << endl;
-} 
-
-if (name.s10.empty()) return;
-checkNum = isNumber(data.s10);
-if ( checkNum == -1 ) {
-    cout << FillDotAfter(name.s10) << " : " << data.s10 << endl;
-} 
-else {
-    cout << FillDotAfter(name.s10) << " " << rangeOfSatisfy(checkNum) << endl;
+int subDisplayData ( string name, string data ) {
+	if (name.empty()) return 0;
+	int checkNum = isNumber(data);
+	if ( checkNum == -1 ) {
+  	  cout << FillDotAfter(name) << " : " << data << endl;
+	} 
+	else {
+ 	   cout << FillDotAfter(name) << " " << rangeOfSatisfy(checkNum) << endl;
+	} 
+	return 1;
 }
 
+void displayData ( SubName name, SubName data ) {
 	
+	if ( !subDisplayData(name.s1, data.s1) ) return;
+	if ( !subDisplayData(name.s2, data.s2) ) return;
+	if ( !subDisplayData(name.s3, data.s3) ) return;
+	if ( !subDisplayData(name.s4, data.s4) ) return;
+	if ( !subDisplayData(name.s5, data.s5) ) return;
+	if ( !subDisplayData(name.s6, data.s6) ) return;
+	if ( !subDisplayData(name.s7, data.s7) ) return;
+	if ( !subDisplayData(name.s8, data.s8) ) return;
+	if ( !subDisplayData(name.s9, data.s9) ) return;
+	if ( !subDisplayData(name.s10, data.s10) ) return;
 	
 	return;
 	 
@@ -914,6 +868,11 @@ void ThangNaoLamRaCaiNay () {
 }
 
 // DD/MM/YYYY
+// I do think that i can make this much better with strtok() 
+// 'cause i wrote this long before i know strtok and other better techniques
+// but yah, i'm still keeping this 'cause there is a quote that "if the code works, don't touch it" =))
+// it works perfectly so i'm keeping it tho, 'till .... i don't know :)
+
 int ValidDateInput (string date) {
 	        SetConsoleTextAttribute(hConsole, 10);
 			int index = 0;
