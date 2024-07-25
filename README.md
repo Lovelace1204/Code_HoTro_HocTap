@@ -13,10 +13,15 @@ The application’s interface is designed to be user-friendly; you can type the 
 
 ![image](https://github.com/user-attachments/assets/7297b480-f9dc-484f-9063-bba3a016e315)
 
-The data structure is organized by subjects or tasks written in the source code using struct for better organization and manipulation.
+The data structure is organized by subjects or tasks written in the source code using structs for better organization and manipulation.
 
 
 ![image](https://github.com/user-attachments/assets/a0cfa906-3784-4ec2-b94e-fcfa2cf4cda5)
+
+To make it easy to manage the names of courses and tasks using structs, a function called 'specify' will help us automatically align tags with data based on time input and source code specifications. This ensures that every piece of information is accurately linked to the correct course and task at its designated time interval.
+
+![image](https://github.com/user-attachments/assets/76e0d5b2-c927-4c79-947e-49291a010aac)
+
 
 :sun_behind_large_cloud: Additionally, the app includes useful features like “clear” to clean the screen and a fun command “thangnaolamracainay?” that I highly recommend trying out =))
 
